@@ -1,10 +1,11 @@
 #include <stdbool.h>
 
 #include "./libraries/menu.h"
+#include "./libraries/array.h"
 
 int main(void) {
-    unsigned int option, count;
-    int* array = NULL;
+    unsigned int option, arraySize = 0;
+    int *array = NULL;
 
     printf("-------------------------Welcome-------------------------\n");
 
@@ -13,32 +14,32 @@ int main(void) {
 
         printf("Introduce an option: ");
 
-        if (scanf("%u", &option) != 1) {
+        if (scanf("%u", &option) != 1) { // NOLINT
             handleError("Invalid Input. Try again.");
             continue;
         }
 
         switch (option) {
             case 1:
-                // showArray();
+                displayArray(array, arraySize);
                 break;
             case 2:
-                // array = fillArrayManually();
+                arraySize = getArraySize();
+                fillArrayManually(&array, arraySize);
                 break;
             case 3:
-                // fillArrayRandomly();
+                // arraySize = getArraySize();
+                // fillArrayRandomly(&array, arraySize);
                 break;
             case 4:
                 // sortArray();
                 break;
             case 5:
+                free(array);
                 displayByeMessageAndExit();
             default:
                 handleError("Invalid Option. Try again.");
                 break;
         }
-
     }
-
-    return 0;
 }
