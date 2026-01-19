@@ -1,11 +1,21 @@
 #include <stdbool.h>
 
-#include "./libraries/menu.h"
-#include "./libraries/array.h"
+#include "../menu.h"
+#include "array.h"
 
 int main(void) {
     unsigned int option, arraySize = 0;
     int *array = NULL;
+
+    const char *options[] = {
+        "Display Array",
+        "Fill Array Manually",
+        "Fill Array Randomly",
+        "Sort Array",
+        "Free Space & Exit"
+    };
+
+    setMenuOptions(options, 5);
 
     printf("-------------------------Welcome-------------------------\n");
 
@@ -15,7 +25,7 @@ int main(void) {
         printf("Introduce an option: ");
 
         if (scanf("%u", &option) != 1) { // NOLINT
-            handleError("Invalid Input. Try again.");
+            handleNext("Invalid Input.");
             continue;
         }
 
@@ -25,6 +35,9 @@ int main(void) {
                 break;
             case 2:
                 arraySize = getArraySize();
+                if (arraySize == 0) {
+                    break;
+                }
                 fillArrayManually(&array, arraySize);
                 break;
             case 3:
@@ -38,7 +51,8 @@ int main(void) {
                 free(array);
                 displayByeMessageAndExit();
             default:
-                handleError("Invalid Option. Try again.");
+                clearBuffer();
+                handleNext("Invalid Option.");
                 break;
         }
     }
