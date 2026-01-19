@@ -49,6 +49,7 @@ int main(void) {
                 break;
             case 5:
                 free(array);
+                printf("Memory cleaned successfully. \n");
                 displayByeMessageAndExit();
             default:
                 clearBuffer();
