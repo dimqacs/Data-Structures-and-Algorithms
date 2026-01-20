@@ -32,7 +32,7 @@ static void setMenuOptions(const char *options[], const unsigned int optionCount
     }
 
     for (unsigned int i = 0; i < optionCount; i++) {
-        *(menuOptions + i) = malloc(strlen(*(options + 1)) + 1); // NOLINT
+        *(menuOptions + i) = malloc(strlen(*(options + 1)) + 1);
 
         if (!*(menuOptions + i)) {
             printf("Memory allocation failed. Can't set Menu, exiting the program.");

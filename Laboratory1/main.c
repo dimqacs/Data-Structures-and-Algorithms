@@ -41,8 +41,8 @@ int main(void) {
                 fillArrayManually(&array, arraySize);
                 break;
             case 3:
-                // arraySize = getArraySize();
-                // fillArrayRandomly(&array, arraySize);
+                arraySize = getArraySize();
+                fillArrayRandomly(&array, (int) arraySize);
                 break;
             case 4:
                 // sortArray();
@@ -52,7 +52,6 @@ int main(void) {
                 printf("Memory cleaned successfully. \n");
                 displayByeMessageAndExit();
             default:
-                // clearBuffer();
                 handleNext("Invalid Option.");
                 break;
         }

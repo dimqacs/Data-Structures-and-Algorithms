@@ -1,5 +1,6 @@
 #pragma once
 #include <stdio.h>
+#include <time.h>
 
 static void displayArray(const int *array, const unsigned int size) {
     if (size == 0) {
@@ -31,7 +32,7 @@ static unsigned int getArraySize() {
     return size;
 }
 
-static void fillArrayManually(int **array, const unsigned int size) {
+static bool allocateArrayMemory(int **array, const unsigned int size) {
     if (*array) {
         free(*array);
     }
@@ -40,6 +41,14 @@ static void fillArrayManually(int **array, const unsigned int size) {
 
     if (!*array) {
         handleNext("Memory allocation failed.");
+        return false;
+    }
+
+    return true;
+}
+
+static void fillArrayManually(int **array, const unsigned int size) {
+    if (!allocateArrayMemory(array, size)) {
         return;
     }
 
@@ -49,4 +58,29 @@ static void fillArrayManually(int **array, const unsigned int size) {
     }
 
     clearTerminal();
+}
+
+static int getRandomNumber(const int min, const int max) {
+    struct timespec ts;
+    clock_gettime(CLOCK_REALTIME, &ts);
+    long milliseconds = ts.tv_nsec + ts.tv_sec * 1000000;
+
+    // Linear Congruential Generator (LCG)
+    milliseconds = (milliseconds * 214013 + 2531011) % 2147483648;
+
+    const int range = max - min + 1;
+
+    return (int) (milliseconds % range + range) % range + min;
+}
+
+static void fillArrayRandomly(int **array, const int size) {
+    if (!allocateArrayMemory(array, size)) {
+        return;
+    }
+
+    for (unsigned int i = 0; i < size; i++) {
+        *(*array + i) = getRandomNumber(-size, size);
+    }
+
+    handleNext("Array successfully filled.");
 }
