@@ -2,16 +2,12 @@
 
 This project contains multiple laboratory exercises in C, organized using CMake and a convenient Makefile.
 
----
-
 ## Prerequisites
 
 - Linux / macOS: `cmake` and `make` installed
 - Windows: Use WSL, MSYS2, or MinGW (`mingw32-make`)
 
 C compiler (GCC / Clang) must be installed.
-
----
 
 ## Build Instructions
 
@@ -28,8 +24,6 @@ This will:
 - Configure CMake in `cmake-build-debug`
 - Compile all laboratory executables
 
----
-
 ### 2. Run a Lab
 
 After building, you can run any lab directly (1-6):
@@ -43,8 +37,6 @@ Notes:
 - If the executable does not exist yet, Makefile will prompt you to `make build` first.
 - No rebuild occurs if the executable is already present.
 
----
-
 ### 3. Clean build artifacts
 
 ```shell
@@ -52,8 +44,6 @@ make clean
 ```
 
 This removes the entire `cmake-build-debug` directory.
-
----
 
 ### 4. Rebuild everything
 
@@ -63,15 +53,10 @@ make rebuild
 
 This is equivalent to `make clean` followed by `make build`.
 
----
+### 5. List all available Makefile targets
 
-## Makefile targets summary
+To see all available commands and their description, run:
 
-| Target       | Description                  |
-|--------------|------------------------------|
-| make build   | Configure and build all labs |
-| make clean   | Remove the build directory   |
-| make lab1    | Run Laboratory 1             |
-| make lab2    | Run Laboratory 2             |
-| make rebuild | Clean and rebuild everything |
-| make help    | Information about commands   |
+```shell
+make help
+```
