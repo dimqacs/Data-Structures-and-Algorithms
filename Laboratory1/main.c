@@ -52,7 +52,7 @@ int main(void) {
                 printf("Memory cleaned successfully. \n");
                 displayByeMessageAndExit();
             default:
-                clearBuffer();
+                // clearBuffer();
                 handleNext("Invalid Option.");
                 break;
         }

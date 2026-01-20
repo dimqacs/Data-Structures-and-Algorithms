@@ -1,93 +1,77 @@
-# Data Structures and Algorithms UTM
+# DSA Labs Project
+
+This project contains multiple laboratory exercises in C, organized using CMake and a convenient Makefile.
+
+---
 
 ## Prerequisites
 
-To build and run this project, you need the following tools installed:
+- Linux / macOS: `cmake` and `make` installed
+- Windows: Use WSL, MSYS2, or MinGW (`mingw32-make`)
 
-- CMake ≥ 4.1
-- C compiler
-  - Linux: gcc or clang
-  - Windows: MinGW-w64 or Microsoft Visual C++ (MSVC)
-- Build system
-  - Ninja (recommended) or
-  - Make (Linux) / MSBuild (Windows)
+C compiler (GCC / Clang) must be installed.
 
-## Quick Start (Linux)
+---
 
-Create a build directory
+## Build Instructions
 
-```sh
-mkdir cmake-build-debug
-cd cmake-build-debug
-```
-Configure the project
+### 1. Build all labs
 
-```sh
-cmake .. -DCMAKE_BUILD_TYPE=Debug
+From the project root:
+
+```shell
+make build
 ```
 
-Build
+This will:
 
-```sh
-cmake --build .
+- Configure CMake in `cmake-build-debug`
+- Compile all laboratory executables
+
+---
+
+### 2. Run a Lab
+
+After building, you can run any lab directly (1-6):
+
+```shell
+make lab1
 ```
 
-Run the Program
+Notes:
 
-```sh
-./dsa
+- If the executable does not exist yet, Makefile will prompt you to `make build` first.
+- No rebuild occurs if the executable is already present.
+
+---
+
+### 3. Clean build artifacts
+
+```shell
+make clean
 ```
 
-## Quick Start (Windows)
+This removes the entire `cmake-build-debug` directory.
 
-### Option 1: Using MinGW-w64 (Command Prompt or PowerShell)
+---
 
-Create a build directory
+### 4. Rebuild everything
 
-```sh
-mkdir cmake-build-debug
-cd cmake-build-debug
-```
-Configure the project
-
-```sh
-cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug
+```shell
+make rebuild
 ```
 
-Build
+This is equivalent to `make clean` followed by `make build`.
 
-```sh
-cmake --build .
-```
+---
 
-### Option 2: Using Visual Studio (MSVC)
+## Makefile targets summary
 
-Create a build directory
-
-```sh
-mkdir cmake-build-debug
-cd cmake-build-debug
-```
-Configure the project
-
-```sh
-cmake .. -G "Visual Studio 17 2022"
-```
-
-Build
-
-```sh
-cmake --build . --config Debug
-```
-
-Run the Program
-
-```sh
-dsa.exe
-```
-
-## Notes
-
-- The project uses out-of-source builds (recommended CMake practice).
-- If CMake reports “ninja: no work to do”, the project is already up to date.
-- To clean the build, simply delete the cmake-build-debug directory and rebuild.
+| Target       | Description                  |
+|--------------|------------------------------|
+| make build   | Configure and build all labs |
+| make clean   | Remove the build directory   |
+| make lab1    | Run Laboratory 1             |
+| make lab2    | Run Laboratory 2             |
+| make rebuild | Clean and rebuild everything |
+| make help    | Information about commands   |
