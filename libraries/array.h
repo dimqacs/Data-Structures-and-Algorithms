@@ -65,7 +65,7 @@ static int getRandomNumber(const int min, const int max) {
     clock_gettime(CLOCK_REALTIME, &ts);
     long milliseconds = ts.tv_nsec + ts.tv_sec * 1000000;
 
-    // Linear Congruential Generator (LCG)
+    // Linear Congruential Generator (LCG) https://en.wikipedia.org/wiki/Linear_congruential_generator
     milliseconds = (milliseconds * 214013 + 2531011) % 2147483648;
 
     const int range = max - min + 1;
