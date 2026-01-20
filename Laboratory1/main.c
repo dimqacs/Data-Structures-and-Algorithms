@@ -1,7 +1,7 @@
 #include <stdbool.h>
 
-#include "../menu.h"
-#include "array.h"
+#include "../libraries/menu.h"
+#include "../libraries/array.h"
 
 int main(void) {
     unsigned int option, arraySize = 0;
