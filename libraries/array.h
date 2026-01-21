@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <time.h>
 
+#include "../libraries/read.h"
+
 static void displayArray(const int *array, const unsigned int size) {
     if (size == 0) {
         handleNext("The array is empty, try introducing values first.");
@@ -18,16 +20,9 @@ static void displayArray(const int *array, const unsigned int size) {
 }
 
 static unsigned int getArraySize() {
-    clearBuffer();
-
     unsigned int size;
 
-    printf("Enter the size of the array: ");
-
-    if (scanf("%u", &size) != 1 || size == 0) { // NOLINT
-        handleNext("Invalid size of the Array provided. No Array will be created.");
-        return 0;
-    }
+    readUnsignedInt("Enter the size of the array: ", &size);
 
     return size;
 }
@@ -53,8 +48,10 @@ static void fillArrayManually(int **array, const unsigned int size) {
     }
 
     for (unsigned int i = 0; i < size; i++) {
-        printf("Introduce the %u value: ", i + 1);
-        scanf("%d", *array + i); //NOLINT
+        char prompt[64];
+        snprintf(prompt, sizeof(prompt), "Introduce the %u value: ", i + 1);
+
+        readInt(prompt, *array + i);
     }
 
     clearTerminal();

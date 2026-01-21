@@ -7,7 +7,11 @@ static char **menuOptions = NULL;
 static unsigned int menuOptionCount = 0;
 
 static void clearTerminal() {
-    system("clear");
+    #ifdef _WIN32
+        system("clear");
+    #else
+        system("clear");
+    #endif
 }
 
 static void clearBuffer() {
@@ -17,7 +21,6 @@ static void clearBuffer() {
 }
 
 static void handleNext(char message[]) {
-    clearBuffer();
     printf("%s \nPress Enter to continue...", message);
     clearBuffer();
     clearTerminal();
@@ -28,7 +31,7 @@ static void setMenuOptions(const char *options[], const unsigned int optionCount
 
     if (!menuOptions) {
         printf("Memory allocation failed. Can't set Menu, exiting the program.");
-        exit(0);
+        exit(EXIT_FAILURE);
     }
 
     for (unsigned int i = 0; i < optionCount; i++) {
@@ -36,7 +39,7 @@ static void setMenuOptions(const char *options[], const unsigned int optionCount
 
         if (!*(menuOptions + i)) {
             printf("Memory allocation failed. Can't set Menu, exiting the program.");
-            exit(0);
+            exit(EXIT_FAILURE);
         }
 
         strcpy(*(menuOptions + i), *(options + i));

@@ -22,12 +22,7 @@ int main(void) {
     while (true) {
         displayMenu();
 
-        printf("Introduce an option: ");
-
-        if (scanf("%u", &option) != 1) { // NOLINT
-            handleNext("Invalid Input.");
-            continue;
-        }
+        readUnsignedInt("Introduce an option: ", &option);
 
         switch (option) {
             case 1:
@@ -36,6 +31,7 @@ int main(void) {
             case 2:
                 arraySize = getArraySize();
                 if (arraySize == 0) {
+                    handleNext("Cannot create array with size 0.");
                     break;
                 }
                 fillArrayManually(&array, arraySize);
@@ -52,7 +48,7 @@ int main(void) {
                 printf("Memory cleaned successfully. \n");
                 displayByeMessageAndExit();
             default:
-                handleNext("Invalid Option.");
+                handleNext("Option not defined.");
                 break;
         }
     }
