@@ -1,11 +1,15 @@
-#pragma once
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-static void handleFailureExit(const char *reason) {
+#include "read.h"
+
+void handleFailureExit(const char *reason) {
     printf("%s", reason);
     exit(EXIT_FAILURE);
 }
 
-static int readInt(const char *prompt, int *out) {
+int readInt(const char *prompt, int *out) {
     char buffer[64];
     char *end;
 
@@ -28,7 +32,7 @@ static int readInt(const char *prompt, int *out) {
     }
 }
 
-static unsigned int readUnsignedInt(const char *prompt, unsigned int *out) {
+unsigned int readUnsignedInt(const char *prompt, unsigned int *out) {
     char buffer[64];
     char *end;
 

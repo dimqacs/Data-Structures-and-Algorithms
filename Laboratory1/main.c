@@ -1,7 +1,11 @@
+#include <stdio.h>
+#include <stddef.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
-#include "../libraries/menu.h"
-#include "../libraries/array.h"
+#include "menu.h"
+#include "array.h"
+#include "read.h"
 
 int main(void) {
     unsigned int option, arraySize = 0;

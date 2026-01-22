@@ -1,12 +1,13 @@
-#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-static char **menuOptions = NULL;
-static unsigned int menuOptionCount = 0;
+#include "menu.h"
 
-static void clearTerminal() {
+char **menuOptions = NULL;
+unsigned int menuOptionCount = 0;
+
+void clearTerminal() {
     #ifdef _WIN32
         system("clear");
     #else
@@ -14,19 +15,19 @@ static void clearTerminal() {
     #endif
 }
 
-static void clearBuffer() {
+void clearBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {
     }
 }
 
-static void handleNext(char message[]) {
+void handleNext(char message[]) {
     printf("%s \nPress Enter to continue...", message);
     clearBuffer();
     clearTerminal();
 }
 
-static void setMenuOptions(const char *options[], const unsigned int optionCount) {
+void setMenuOptions(const char *options[], const unsigned int optionCount) {
     menuOptions = calloc(optionCount, sizeof(char *));
 
     if (!menuOptions) {
@@ -48,7 +49,7 @@ static void setMenuOptions(const char *options[], const unsigned int optionCount
     menuOptionCount = optionCount;
 }
 
-static void displayMenu() {
+void displayMenu() {
     printf("Options:\n");
 
     for (unsigned int i = 0; i < menuOptionCount; i++) {
@@ -58,7 +59,7 @@ static void displayMenu() {
     printf("---------------------------------------------------------\n");
 }
 
-static void displayByeMessageAndExit() {
+void displayByeMessageAndExit() {
     printf("Bye!\n");
     exit(0);
 }

@@ -1,10 +1,13 @@
-#pragma once
-#include <stdio.h>
 #include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-#include "../libraries/read.h"
+#include "read.h"
+#include "menu.h"
+#include "array.h"
 
-static void displayArray(const int *array, const unsigned int size) {
+void displayArray(const int *array, const unsigned int size) {
     if (size == 0) {
         handleNext("The array is empty, try introducing values first.");
         return;
@@ -19,7 +22,7 @@ static void displayArray(const int *array, const unsigned int size) {
     handleNext("");
 }
 
-static unsigned int getArraySize() {
+unsigned int getArraySize() {
     unsigned int size;
 
     readUnsignedInt("Enter the size of the array: ", &size);
@@ -27,7 +30,7 @@ static unsigned int getArraySize() {
     return size;
 }
 
-static bool allocateArrayMemory(int **array, const unsigned int size) {
+bool allocateArrayMemory(int **array, const unsigned int size) {
     if (*array) {
         free(*array);
     }
@@ -42,7 +45,7 @@ static bool allocateArrayMemory(int **array, const unsigned int size) {
     return true;
 }
 
-static void fillArrayManually(int **array, const unsigned int size) {
+void fillArrayManually(int **array, const unsigned int size) {
     if (!allocateArrayMemory(array, size)) {
         return;
     }
@@ -57,7 +60,7 @@ static void fillArrayManually(int **array, const unsigned int size) {
     clearTerminal();
 }
 
-static int getRandomNumber(const int min, const int max) {
+int getRandomNumber(const int min, const int max) {
     struct timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);
     long milliseconds = ts.tv_nsec + ts.tv_sec * 1000000;
@@ -70,7 +73,7 @@ static int getRandomNumber(const int min, const int max) {
     return (int) (milliseconds % range + range) % range + min;
 }
 
-static void fillArrayRandomly(int **array, const int size) {
+void fillArrayRandomly(int **array, const int size) {
     if (!allocateArrayMemory(array, size)) {
         return;
     }
@@ -81,3 +84,5 @@ static void fillArrayRandomly(int **array, const int size) {
 
     handleNext("Array successfully filled.");
 }
+
+
