@@ -8,6 +8,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 add_subdirectory(libraries/array)
 add_subdirectory(libraries/menu)
 add_subdirectory(libraries/read)
+add_subdirectory(libraries/sort)
 
 # Projects
 add_subdirectory(Laboratory1)

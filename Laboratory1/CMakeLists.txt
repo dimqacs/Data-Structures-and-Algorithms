@@ -7,4 +7,5 @@ target_link_libraries(lab1
         menu
         read
         array
+        sort
 )

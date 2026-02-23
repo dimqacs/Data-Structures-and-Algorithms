@@ -57,7 +57,7 @@ void fillArrayManually(int **array, const unsigned int size) {
         readInt(prompt, *array + i);
     }
 
-    clearTerminal();
+    displayArray(*array, size);
 }
 
 int getRandomNumber(const int min, const int max) {
@@ -82,7 +82,7 @@ void fillArrayRandomly(int **array, const int size) {
         *(*array + i) = getRandomNumber(-size, size);
     }
 
-    handleNext("Array successfully filled.");
+    displayArray(*array, size);
 }
 
 
