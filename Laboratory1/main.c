@@ -30,7 +30,7 @@ int main(void) {
 
         switch (option) {
             case 1:
-                displayArray(arrayData, arraySize);
+                displayArray(arrayData, arraySize, "The original Array: ", true);
                 break;
             case 2:
                 arraySize = getArraySize();
@@ -42,22 +42,32 @@ int main(void) {
                 break;
             case 3:
                 arraySize = getArraySize();
+                if (arraySize == 0 || arraySize % 2 == 1) {
+                    handleNext("Cannot create array with size 0 or odd number of elements.");
+                    break;
+                }
                 fillArrayRandomly(&arrayData, (int) arraySize);
                 break;
             case 4:
-                if (arraySize == 0) {
-                    handleNext("There is nothing to sort, try adding elements first.");
-                    break;
-                }
+                displayArray(arrayData, arraySize, "The original unsorted Array: ", false);
+
+                bool sorted = false;
 
                 for (int index = 0; index < arraySize; index++) {
-                    if (*(arrayData + index) < 0) {
-                        index % 2 == 0 ? heapSortAscending(&arrayData, arraySize) : countSortDescending(&arrayData, arraySize);
+                    if (*(arrayData + index) < 0 ) {
+                        if (index % 2 == 0) {
+                            displayArray(heapSortAscending(arrayData, arraySize), arraySize, "\nA: Ascending sorted Array using Heap Sort: ", false);
+                            sorted = true;
+                        }
                         break;
                     }
                 }
 
-                displayArray(arrayData, arraySize);
+                if (!sorted) {
+                    displayArray(countSortDescending(arrayData, arraySize), arraySize, "\nA: Descending sorted Array using Count Sort: ", false);
+                }
+
+                handleNext("\nTemporary...");
                 break;
             case 5:
                 free(arrayData);

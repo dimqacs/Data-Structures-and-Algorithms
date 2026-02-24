@@ -7,19 +7,21 @@
 #include "menu.h"
 #include "array.h"
 
-void displayArray(const int *array, const unsigned int size) {
+void displayArray(const int *array, const unsigned int size, const char *text, const bool handleNextFlag) {
     if (size == 0) {
         handleNext("The array is empty, try introducing values first.");
         return;
     }
 
-    printf("The array with %u elements: ", size);
+    text[0] == '\0' ? printf("The array with %u elements: ", size) : printf(text);
 
     for (int i = 0; i < size; i++) {
         printf("%d ", *(array + i));
     }
 
-    handleNext("");
+    if (handleNextFlag) {
+        handleNext("");
+    }
 }
 
 unsigned int getArraySize() {
@@ -57,7 +59,7 @@ void fillArrayManually(int **array, const unsigned int size) {
         readInt(prompt, *array + i);
     }
 
-    displayArray(*array, size);
+    displayArray(*array, size, "", true);
 }
 
 int getRandomNumber(const int min, const int max) {
@@ -82,7 +84,7 @@ void fillArrayRandomly(int **array, const int size) {
         *(*array + i) = getRandomNumber(-size, size);
     }
 
-    displayArray(*array, size);
+    displayArray(*array, size, "", true);
 }
 
 

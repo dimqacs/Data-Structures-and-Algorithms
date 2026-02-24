@@ -1,14 +1,10 @@
 #include <stdlib.h>
-#include <stdbool.h>
-
-#include "sort.h"
-
 #include <stdio.h>
 
+#include "sort.h"
 #include "array.h"
-#include "../array/array.h"
 
-void heapify(int **array, const unsigned int size, const int index){
+void heapify(int *array, const unsigned int size, const int index){
 
     // Initialize largest as root
     int largest = index;
@@ -20,55 +16,61 @@ void heapify(int **array, const unsigned int size, const int index){
     const int right = 2 * index + 2;
 
     // If left child is larger than root
-    if (left < size && *(*array + left) > *(*array + largest)) {
+    if (left < size && *(array + left) > *(array + largest)) {
         largest = left;
     }
 
     // If right child is larger than largest so far
-    if (right < size && *(*array + right) > *(*array + largest)) {
+    if (right < size && *(array + right) > *(array + largest)) {
         largest = right;
     }
 
     // If largest is not root
     if (largest != index) {
-        const int temp = *(*array + index);
-        *(*array + index) = *(*array + largest);
-        *(*array + largest) = temp;
+        const int temp = *(array + index);
+        *(array + index) = *(array + largest);
+        *(array + largest) = temp;
 
         // Recursively heapify the affected subtree
         heapify(array, size, largest);
     }
 }
 
-void heapSortAscending(int **array, const unsigned int size){
+int* heapSortAscending(const int *array, const unsigned int size){
+
+    int *sortedArray = NULL;
+    allocateArrayMemory(&sortedArray, size);
+    for (int index = 0; index < size; index++) {
+        *(sortedArray + index) = *(array + index);
+    }
 
     // Build heap (rearrange vector)
-    for (int index = size / 2 - 1; index >= 0; index--) {
-        heapify(array, size, index);
+    for (int index = (int)size / 2 - 1; index >= 0; index--) {
+        heapify(sortedArray, size, index);
     }
 
     // One by one extract an element from heap
-    for (int index = size - 1; index > 0; index--) {
+    for (int index = (int)size - 1; index > 0; index--) {
 
         // Move current root to end
-        const int temp = **array;
-        **array = *(*array + index);
-        *(*array + index) = temp;
+        const int temp = *sortedArray;
+        *sortedArray = *(sortedArray + index);
+        *(sortedArray + index) = temp;
 
         // Call max heapify on the reduced heap
-        heapify(array, index, 0);
+        heapify(sortedArray, index, 0);
     }
 
-    printf("Array was sorted Ascending using Heap Sort.\n");
+    return sortedArray;
 }
 
-void countSortDescending(int **array, const unsigned int size) {
+int* countSortDescending(const int *array, const unsigned int size) {
 
     // Find maximum and minimum element
-    int maxValue = *(*array);
-    int minValue = *(*array);
+    int maxValue = *array;
+    int minValue = *array;
     for (int i = 0; i < size; i++) {
-        const int value = *(*array + i);
+        const int value = *(array + i);
         if (value > maxValue) maxValue = value;
         if (value < minValue) minValue = value;
     }
@@ -76,40 +78,33 @@ void countSortDescending(int **array, const unsigned int size) {
     const int range = maxValue - minValue + 1;
 
     // Create and initialize countArray array
-    int *countArrayData = NULL;
-    int **countArray = &countArrayData;
-    allocateArrayMemory(countArray, range);
+    int *countArray = NULL;
+    allocateArrayMemory(&countArray, range);
 
     // Count frequency of each element with shift
     for (int index = 0; index < size; index++) {
-        (*(*countArray + (*(*array + index) - minValue)))++;
+        (*(countArray + (*(array + index) - minValue)))++;
     }
 
     // Compute prefix sum
     for (int index = 1; index < range; index++) {
-        *(*countArray + index) += *(*countArray + (index - 1));
+        *(countArray + index) += *(countArray + (index - 1));
     }
 
     // Build output array
-    int* sortedArrayData = NULL;
-    int** sortedArray = &sortedArrayData;
-    allocateArrayMemory(sortedArray, size);
 
-    for (int index = size - 1; index >= 0; index--) {
-        const int value = *(*array + index);
-        const int position = size - *(*countArray + (value - minValue));
-        *(*sortedArray + position) = value;
-        (*(*countArray + (value - minValue)))--;
-    }
+    int* sortedArray = NULL;
+    allocateArrayMemory(&sortedArray, size);
 
-    // Copy sorted elements back to arr[]
-    for (int index = 0; index < size; index++) {
-        *(*array + index) = *(*sortedArray + index);
+    for (int index = (int)size - 1; index >= 0; index--) {
+        const int value = *(array + index);
+        const int position = (int)size - *(countArray + (value - minValue));
+        *(sortedArray + position) = value;
+        (*(countArray + (value - minValue)))--;
     }
 
     // Free dynamically allocated memory
-    free(countArrayData);
-    free(sortedArrayData);
+    free(countArray);
 
-    printf("Array was sorted Descending using Count Sort.\n");
+    return sortedArray;
 }
