@@ -7,6 +7,21 @@
 #include "read.h"
 #include "sort.h"
 
+bool evenSmallerThenOdd(const int *array, const unsigned int size) {
+    double even = 0, odd = 0, oddCount = 0;
+
+    for (unsigned int index = 0; index < size; index++) {
+        if (*(array + index) % 2 == 0) {
+            even += *(array + index);
+        } else {
+            odd += *(array + index);
+            oddCount++;
+        }
+    }
+
+    return even < odd / oddCount ? true : false;
+}
+
 int main(void) {
     unsigned int option, arraySize = 0;
     int *arrayData = NULL;
@@ -35,6 +50,7 @@ int main(void) {
             case 2:
                 arraySize = getArraySize();
                 if (arraySize == 0 || arraySize % 2 == 1) {
+                    arraySize = 0;
                     handleNext("Cannot create array with size 0 or odd number of elements.");
                     break;
                 }
@@ -43,6 +59,7 @@ int main(void) {
             case 3:
                 arraySize = getArraySize();
                 if (arraySize == 0 || arraySize % 2 == 1) {
+                    arraySize = 0;
                     handleNext("Cannot create array with size 0 or odd number of elements.");
                     break;
                 }
@@ -51,12 +68,14 @@ int main(void) {
             case 4:
                 displayArray(arrayData, arraySize, "The original unsorted Array: ", false);
 
+                // Condition A
                 bool sorted = false;
 
                 for (int index = 0; index < arraySize; index++) {
-                    if (*(arrayData + index) < 0 ) {
+                    if (*(arrayData + index) < 0) {
                         if (index % 2 == 0) {
-                            displayArray(heapSortAscending(arrayData, arraySize), arraySize, "\nA: Ascending sorted Array using Heap Sort: ", false);
+                            displayArray(heapSortAscending(arrayData, arraySize), arraySize,
+                                         "\nA: Ascending sorted Array using Heap Sort: ", false);
                             sorted = true;
                         }
                         break;
@@ -64,8 +83,16 @@ int main(void) {
                 }
 
                 if (!sorted) {
-                    displayArray(countSortDescending(arrayData, arraySize), arraySize, "\nA: Descending sorted Array using Count Sort: ", false);
+                    displayArray(countSortDescending(arrayData, arraySize), arraySize,
+                                 "\nA: Descending sorted Array using Count Sort: ", false);
                 }
+
+                // Condition B
+                evenSmallerThenOdd(arrayData, arraySize)
+                    ? displayArray(radixSortDescending(arrayData, arraySize), arraySize,
+                                   "\nB: Descending sorted Array using Radix Sort: ", false)
+                    : displayArray(combSortAscending(arrayData, arraySize), arraySize,
+                                   "\nB: Ascending sorted Array using Comb Sort: ", false);
 
                 handleNext("\nTemporary...");
                 break;

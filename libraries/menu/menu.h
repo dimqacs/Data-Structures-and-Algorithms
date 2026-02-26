@@ -6,7 +6,7 @@ void clearBuffer();
 
 void handleNext(char message[]);
 
-void setMenuOptions(const char *options[], const unsigned int optionCount);
+void setMenuOptions(const char *options[], unsigned int optionCount);
 
 void displayMenu();
 

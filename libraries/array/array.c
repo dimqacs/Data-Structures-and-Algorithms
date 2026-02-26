@@ -87,4 +87,16 @@ void fillArrayRandomly(int **array, const int size) {
     displayArray(*array, size, "", true);
 }
 
+void equalArrays(const int *arrayFrom, int *arrayTo, const unsigned int size) {
+    for (int index = 0; index < size; index++) {
+        *(arrayTo + index) = *(arrayFrom + index);
+    }
+}
+
+void swap(int *valueFrom, int *valueTo) {
+    const int temp = *valueFrom;
+    *valueFrom = *valueTo;
+    *valueTo = temp;
+}
+
 

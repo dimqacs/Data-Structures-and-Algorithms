@@ -8,11 +8,11 @@ char **menuOptions = NULL;
 unsigned int menuOptionCount = 0;
 
 void clearTerminal() {
-    #ifdef _WIN32
-        system("clear");
-    #else
-        system("clear");
-    #endif
+#ifdef _WIN32
+    system("clear");
+#else
+    system("clear");
+#endif
 }
 
 void clearBuffer() {

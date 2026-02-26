@@ -12,3 +12,7 @@ void fillArrayManually(int **array, unsigned int size);
 int getRandomNumber(int min, int max);
 
 void fillArrayRandomly(int **array, int size);
+
+void equalArrays(const int *arrayFrom, int *arrayTo, unsigned int size);
+
+void swap(int *valueFrom, int *valueTo);

@@ -54,4 +54,3 @@ unsigned int readUnsignedInt(const char *prompt, unsigned int *out) {
         return 1;
     }
 }
-
