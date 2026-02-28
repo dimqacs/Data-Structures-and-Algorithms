@@ -6,21 +6,7 @@
 #include "array.h"
 #include "read.h"
 #include "sort.h"
-
-bool evenSmallerThenOdd(const int *array, const unsigned int size) {
-    double even = 0, odd = 0, oddCount = 0;
-
-    for (unsigned int index = 0; index < size; index++) {
-        if (*(array + index) % 2 == 0) {
-            even += *(array + index);
-        } else {
-            odd += *(array + index);
-            oddCount++;
-        }
-    }
-
-    return even < odd / oddCount ? true : false;
-}
+#include "math.h"
 
 int main(void) {
     unsigned int option, arraySize = 0;
@@ -66,6 +52,11 @@ int main(void) {
                 fillArrayRandomly(&arrayData, (int) arraySize);
                 break;
             case 4:
+                if (arraySize == 0) {
+                    handleNext("There is nothing to sort, try adding Array first.");
+                    break;
+                }
+
                 displayArray(arrayData, arraySize, "The original unsorted Array: ", false);
 
                 // Condition A
@@ -94,7 +85,20 @@ int main(void) {
                     : displayArray(combSortAscending(arrayData, arraySize), arraySize,
                                    "\nB: Ascending sorted Array using Comb Sort: ", false);
 
-                handleNext("\nTemporary...");
+                // Condition C
+                unsigned int primeNumbers = 0;
+                for (int index = 0; index < arraySize; index++) {
+                    if (isPrime(*(arrayData + index))) {
+                        primeNumbers++;
+                    }
+                }
+
+                primeNumbers >= 2
+                    ? displayArray(mergeSortAscending(arrayData, arraySize), arraySize,
+                                   "\nC: Ascending sorted Array using Merge Sort: ", true)
+                    : displayArray(bubbleSortDescending(arrayData, arraySize), arraySize,
+                                   "\nC: Descending sorted Array using Bubble Sort: ", true);
+
                 break;
             case 5:
                 free(arrayData);

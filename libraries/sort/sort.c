@@ -200,3 +200,107 @@ int *combSortAscending(const int *array, unsigned int size) {
 
     return sortedArray;
 }
+
+// Merges two subarrays of array.
+// First subarray is array[left...middle]
+// Second subarray is array[middle+1...right]
+void merge(int *array, const int left, const int middle, const int right) {
+    const int leftArrayCount = middle - left + 1;
+    const int rightArrayCount = right - middle;
+
+    // Create temp arrays
+    int *leftArray = NULL;
+    allocateArrayMemory(&leftArray, leftArrayCount);
+
+    int *rightArray = NULL;
+    allocateArrayMemory(&rightArray, rightArrayCount);
+
+    // Copy data to temp arrays leftArray[] and rightArray[]
+    for (int index = 0; index < leftArrayCount; index++) {
+        *(leftArray + index) = *(array + left + index);
+    }
+
+    for (int index = 0; index < rightArrayCount; index++) {
+        *(rightArray + index) = *(array + middle + 1 + index);
+    }
+
+    // Merge the temp arrays back into array[left...right]
+    int leftIndex = 0;
+    int rightIndex = 0;
+    int arrayIndex = left;
+    while (leftIndex < leftArrayCount && rightIndex < rightArrayCount) {
+        if (*(leftArray + leftIndex) <= *(rightArray + rightIndex)) {
+            *(array + arrayIndex) = *(leftArray + leftIndex);
+            leftIndex++;
+        } else {
+            *(array + arrayIndex) = *(rightArray + rightIndex);
+            rightIndex++;
+        }
+        arrayIndex++;
+    }
+
+    // Copy the remaining elements of leftArray[],
+    // if there are any
+    while (leftIndex < leftArrayCount) {
+        *(array + arrayIndex) = *(leftArray + leftIndex);
+        leftIndex++;
+        arrayIndex++;
+    }
+
+    // Copy the remaining elements of rightArray[],
+    // if there are any
+    while (rightIndex < rightArrayCount) {
+        *(array + arrayIndex) = *(rightArray + rightIndex);
+        rightIndex++;
+        arrayIndex++;
+    }
+
+    // Free dynamically allocated memory
+    free(leftArray);
+    free(rightArray);
+}
+
+void mergeSort(int *array, const int left, const int right) {
+    if (left < right) {
+        const int middle = left + (right - left) / 2;
+
+        // Sort first and second halves
+        mergeSort(array, left, middle);
+        mergeSort(array, middle + 1, right);
+
+        merge(array, left, middle, right);
+    }
+}
+
+int *mergeSortAscending(const int *array, const unsigned int size) {
+    int *sortedArray = NULL;
+    allocateArrayMemory(&sortedArray, size);
+    equalArrays(array, sortedArray, size);
+
+    mergeSort(sortedArray, 0, (int) size - 1);
+
+    return sortedArray;
+}
+
+int *bubbleSortDescending(const int *array, const unsigned int size) {
+    int *sortedArray = NULL;
+    allocateArrayMemory(&sortedArray, size);
+    equalArrays(array, sortedArray, size);
+
+    for (int index = 0; index < size - 1; index++) {
+        bool swapped = false;
+        for (int secondIndex = 0; secondIndex < size - index - 1; secondIndex++) {
+            if (*(sortedArray + secondIndex) < *(sortedArray + secondIndex + 1)) {
+                swap(sortedArray + secondIndex, sortedArray + (secondIndex + 1));
+                swapped = true;
+            }
+        }
+
+        // If no two elements were swapped by inner loop,
+        // then break
+        if (swapped == false)
+            break;
+    }
+
+    return sortedArray;
+}

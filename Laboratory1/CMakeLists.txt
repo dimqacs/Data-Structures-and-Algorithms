@@ -8,4 +8,5 @@ target_link_libraries(lab1
         read
         array
         sort
+        math
 )

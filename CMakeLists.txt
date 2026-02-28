@@ -9,9 +9,10 @@ add_subdirectory(libraries/array)
 add_subdirectory(libraries/menu)
 add_subdirectory(libraries/read)
 add_subdirectory(libraries/sort)
+add_subdirectory(libraries/math)
 
 # Projects
-add_subdirectory(Laboratory1)
+add_subdirectory(Laboratory1) #Variant 5
 add_subdirectory(Laboratory2)
 add_subdirectory(Laboratory3)
 add_subdirectory(Laboratory4)

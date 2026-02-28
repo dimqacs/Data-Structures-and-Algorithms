@@ -99,4 +99,17 @@ void swap(int *valueFrom, int *valueTo) {
     *valueTo = temp;
 }
 
+bool evenSmallerThenOdd(const int *array, const unsigned int size) {
+    double even = 0, odd = 0, oddCount = 0;
 
+    for (unsigned int index = 0; index < size; index++) {
+        if (*(array + index) % 2 == 0) {
+            even += *(array + index);
+        } else {
+            odd += *(array + index);
+            oddCount++;
+        }
+    }
+
+    return even < odd / oddCount ? true : false;
+}

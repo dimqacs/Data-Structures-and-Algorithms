@@ -16,3 +16,5 @@ void fillArrayRandomly(int **array, int size);
 void equalArrays(const int *arrayFrom, int *arrayTo, unsigned int size);
 
 void swap(int *valueFrom, int *valueTo);
+
+bool evenSmallerThenOdd(const int *array, unsigned int size);
