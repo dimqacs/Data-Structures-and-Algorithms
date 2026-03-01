@@ -13,14 +13,23 @@ int main(void) {
     int *arrayData = NULL;
 
     const char *options[] = {
+        "-------------------------Array-------------------------",
         "Display Array",
         "Fill Array Manually",
         "Fill Array Randomly",
         "Sort Array",
-        "Free Space & Exit"
+        "-------------------------Matrix------------------------",
+        "Display Matrix",
+        "Fill Matrix Manually",
+        "Fill Matrix Randomly",
+        "Sort Matrix",
+        "Sort Matrix",
+        "-------------------------------------------------------",
+        "Free Space & Exit",
+        "-------------------------------------------------------"
     };
 
-    setMenuOptions(options, 5);
+    setMenuOptions(options, 14);
 
     printf("-------------------------Welcome-------------------------\n");
 
@@ -66,7 +75,7 @@ int main(void) {
                     if (*(arrayData + index) < 0) {
                         if (index % 2 == 0) {
                             displayArray(heapSortAscending(arrayData, arraySize), arraySize,
-                                         "\nA: Ascending sorted Array using Heap Sort: ", false);
+                                         "\nA: First negative element is on even position - sorting the Array Ascending using Heap Sort: ", false);
                             sorted = true;
                         }
                         break;
@@ -75,15 +84,15 @@ int main(void) {
 
                 if (!sorted) {
                     displayArray(countSortDescending(arrayData, arraySize), arraySize,
-                                 "\nA: Descending sorted Array using Count Sort: ", false);
+                                 "\nA: First negative element is not on even position - sorting the Array Descending using Count Sort: ", false);
                 }
 
                 // Condition B
                 evenSmallerThenOdd(arrayData, arraySize)
                     ? displayArray(radixSortDescending(arrayData, arraySize), arraySize,
-                                   "\nB: Descending sorted Array using Radix Sort: ", false)
+                                   "\nB: Sum of even elements is smaller then arithmetic mean of odd elements - sorting Array Descending using Radix Sort: ", false)
                     : displayArray(combSortAscending(arrayData, arraySize), arraySize,
-                                   "\nB: Ascending sorted Array using Comb Sort: ", false);
+                                   "\nB: Sum of even elements is not smaller then arithmetic mean of odd elements - sorting Array Ascending using Comb Sort: ", false);
 
                 // Condition C
                 unsigned int primeNumbers = 0;
@@ -95,12 +104,15 @@ int main(void) {
 
                 primeNumbers >= 2
                     ? displayArray(mergeSortAscending(arrayData, arraySize), arraySize,
-                                   "\nC: Ascending sorted Array using Merge Sort: ", true)
+                                   "\nC: There are minimum two prime numbers - sorting Ascending Array using Merge Sort: ", true)
                     : displayArray(bubbleSortDescending(arrayData, arraySize), arraySize,
-                                   "\nC: Descending sorted Array using Bubble Sort: ", true);
+                                   "\nC: There are less then two prime numbers - sorting Descending Array using Bubble Sort: ", true);
 
                 break;
             case 5:
+                displayArray(arrayData, arraySize, "The original Array: ", true);
+                break;
+            case 10:
                 free(arrayData);
                 printf("Memory cleaned successfully. \n");
                 displayByeMessageAndExit();

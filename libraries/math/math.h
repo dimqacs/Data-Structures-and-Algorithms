@@ -3,3 +3,5 @@
 
 bool isPrime(int value);
 
+int getRandomNumber(int min, int max);
+

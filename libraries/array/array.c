@@ -1,11 +1,11 @@
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "array.h"
 #include "read.h"
 #include "menu.h"
-#include "array.h"
+#include "math.h"
 
 void displayArray(const int *array, const unsigned int size, const char *text, const bool handleNextFlag) {
     if (size == 0) {
@@ -60,19 +60,6 @@ void fillArrayManually(int **array, const unsigned int size) {
     }
 
     displayArray(*array, size, "", true);
-}
-
-int getRandomNumber(const int min, const int max) {
-    struct timespec ts;
-    clock_gettime(CLOCK_REALTIME, &ts);
-    long milliseconds = ts.tv_nsec + ts.tv_sec * 1000000;
-
-    // Linear Congruential Generator (LCG) https://en.wikipedia.org/wiki/Linear_congruential_generator
-    milliseconds = (milliseconds * 214013 + 2531011) % 2147483648;
-
-    const int range = max - min + 1;
-
-    return (int) (milliseconds % range + range) % range + min;
 }
 
 void fillArrayRandomly(int **array, const int size) {

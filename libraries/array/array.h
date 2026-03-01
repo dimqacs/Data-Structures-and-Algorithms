@@ -9,8 +9,6 @@ bool allocateArrayMemory(int **array, unsigned int size);
 
 void fillArrayManually(int **array, unsigned int size);
 
-int getRandomNumber(int min, int max);
-
 void fillArrayRandomly(int **array, int size);
 
 void equalArrays(const int *arrayFrom, int *arrayTo, unsigned int size);
