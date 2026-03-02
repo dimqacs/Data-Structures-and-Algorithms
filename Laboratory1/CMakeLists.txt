@@ -9,4 +9,5 @@ target_link_libraries(lab1
         array
         sort
         math
+        matrix
 )

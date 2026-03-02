@@ -9,11 +9,11 @@
 
 void displayArray(const int *array, const unsigned int size, const char *text, const bool handleNextFlag) {
     if (size == 0) {
-        handleNext("The array is empty, try introducing values first.");
+        handleNext("The Array is empty, try introducing values first.");
         return;
     }
 
-    text[0] == '\0' ? printf("The array with %u elements: ", size) : printf(text);
+    text[0] == '\0' ? printf("The Array with %u elements: ", size) : printf("%s", text);
 
     for (int i = 0; i < size; i++) {
         printf("%d ", *(array + i));
@@ -22,14 +22,6 @@ void displayArray(const int *array, const unsigned int size, const char *text, c
     if (handleNextFlag) {
         handleNext("");
     }
-}
-
-unsigned int getArraySize() {
-    unsigned int size;
-
-    readUnsignedInt("Enter the size of the array: ", &size);
-
-    return size;
 }
 
 bool allocateArrayMemory(int **array, const unsigned int size) {

@@ -1,12 +1,10 @@
 #pragma once
 #include <stdbool.h>
 
-void displayMatrix(int *const *array, unsigned int size, const char *text, bool handleNextFlag);
+void displayMatrix(int *const *matrix, unsigned int size, const char *text, bool handleNextFlag);
 
-unsigned int getMatrixSize();
+bool allocateMatrixMemory(int ***matrix, unsigned int newSize, unsigned int oldSize);
 
-bool allocateMatrixMemory(int ***array, unsigned int size);
+void fillMatrixManually(int ***matrix, unsigned int newSize, unsigned int oldSize);
 
-void fillMatrixManually(int ***array, unsigned int size);
-
-void fillMatrixRandomly(int ***array, unsigned int size);
+void fillMatrixRandomly(int ***matrix, int newSize, unsigned int oldSize);

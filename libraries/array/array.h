@@ -3,8 +3,6 @@
 
 void displayArray(const int *array, unsigned int size, const char *text, bool handleNextFlag);
 
-unsigned int getArraySize();
-
 bool allocateArrayMemory(int **array, unsigned int size);
 
 void fillArrayManually(int **array, unsigned int size);
