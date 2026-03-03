@@ -9,8 +9,11 @@
 #include "math.h"
 #include "matrix.h"
 
+const int K = 10;
+
 int main(void) {
     unsigned int option, arraySize = 0, matrixSize = 0, oldMatrixSize = 0;
+
     int *array = NULL;
     int **matrix = NULL;
 
@@ -134,7 +137,7 @@ int main(void) {
 
                 fillMatrixManually(&matrix, matrixSize, oldMatrixSize);
                 break;
-			case 7:
+            case 7:
                 oldMatrixSize = matrixSize;
                 readUnsignedInt("Enter the size of the Matrix: ", &matrixSize);
 
@@ -145,6 +148,66 @@ int main(void) {
                 }
 
                 fillMatrixRandomly(&matrix, matrixSize, oldMatrixSize);
+                break;
+            case 8:
+                if (matrixSize == 0) {
+                    handleNext("There is nothing to sort, try adding Matrix first.");
+                    break;
+                }
+
+                displayMatrix(matrix, matrixSize, "\nThe original unsorted Matrix: \n", false);
+
+                // Condition A
+                int multiplication = 1;
+                int **sortedMatrixA = NULL;
+                allocateMatrixMemory(&sortedMatrixA, matrixSize, 0);
+                equalMatrix(&matrix, &sortedMatrixA, matrixSize);
+
+                for (unsigned int row = 0; row < matrixSize; row++) {
+                    multiplication *= *(*(matrix + row) + 0);
+                }
+
+                if (multiplication > K) {
+                    int *mainDiagonal = NULL;
+                    allocateArrayMemory(&mainDiagonal, matrixSize);
+
+                    for (unsigned int row = 0; row < matrixSize; row++) {
+                        *(mainDiagonal + row) = *(*(matrix + row) + row);
+                    }
+
+                    mainDiagonal = quickSortAscending(mainDiagonal, matrixSize);
+
+                    for (unsigned int row = 0; row < matrixSize; row++) {
+                        *(*(sortedMatrixA + row) + row) = *(mainDiagonal + row);
+                    }
+
+                    displayMatrix(sortedMatrixA, matrixSize,
+                                  "\nA: Multiplication of first column in bigger then global constant K - sorting the main diagonal of Matrix Ascending using Quick Sort:\n",
+                                  false);
+
+                    free(mainDiagonal);
+                } else {
+                    int *secondaryDiagonal = NULL;
+                    allocateArrayMemory(&secondaryDiagonal, matrixSize);
+
+                    for (unsigned int row = 0; row < matrixSize; row++) {
+                        *(secondaryDiagonal + row) = *(*(matrix + row) + matrixSize - row - 1);
+                    }
+
+                    secondaryDiagonal = shellSortDescending(secondaryDiagonal, matrixSize);
+
+                    for (unsigned int row = 0; row < matrixSize; row++) {
+                        *(*(sortedMatrixA + row) + matrixSize - row - 1) = *(secondaryDiagonal + row);
+                    }
+
+                    displayMatrix(sortedMatrixA, matrixSize,
+                                  "\nA: Multiplication of first column is not bigger then global constant K - sorting the secondary diagonal of Matrix Descending using Shell Sort:\n",
+                                  false);
+
+                    free(secondaryDiagonal);
+                }
+
+                handleNext("Temporary...");
                 break;
             case 9:
                 free(array);

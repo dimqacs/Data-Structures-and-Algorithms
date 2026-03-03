@@ -304,3 +304,82 @@ int *bubbleSortDescending(const int *array, const unsigned int size) {
 
     return sortedArray;
 }
+
+int partition(int *array, const int low, const int high) {
+    // Choose the pivot
+    const int pivot = *(array + high);
+
+    // Index of smaller element and indicates
+    // the right position of pivot found so far
+    int index = low - 1;
+
+    // Traverse array[low...high] and move all smaller
+    // elements to the left side. Elements from low to
+    // i are smaller after every iteration
+    for (int j = low; j < high; j++) {
+
+        if (*(array + j) >= pivot) {
+            continue;
+        }
+
+        index++;
+        swap(array + index, array + j);
+    }
+
+    // Move pivot after smaller elements and
+    // return its position
+    swap(array + (index + 1), array + high);
+    return index + 1;
+}
+
+void quickSort(int *array, const int low, const int high) {
+    if (low < high) {
+        
+        // partition return index of pivot
+        const int part = partition(array, low, high);
+
+        // recursion calls for smaller elements
+        // and greater or equals elements
+        quickSort(array, low, part - 1);
+        quickSort(array, part + 1, high);
+    }
+}
+
+int *quickSortAscending(const int *array, const unsigned int size) {
+    int *sortedArray = NULL;
+    allocateArrayMemory(&sortedArray, size);
+    equalArrays(array, sortedArray, size);
+    
+    quickSort(sortedArray, 0, (int)size - 1);
+    
+    return sortedArray;
+}
+
+int* shellSortDescending(const int* array, const unsigned int size) {
+    int *sortedArray = NULL;
+    allocateArrayMemory(&sortedArray, size);
+    equalArrays(array, sortedArray, size);
+
+    // Start with a large gap, then reduce it step by step
+    for (int gap = (int)size / 2; gap > 0; gap /= 2) {
+
+        // Perform a "gapped" insertion sort for this gap size
+        for (int index = gap; index < size; index++) {
+
+            // Current element to be placed correctly
+            const int temp = *(sortedArray + index);
+            int j = index;
+
+            // Shift elements that are smaller than temp to make space
+            while (j >= gap && *(sortedArray + (j - gap)) < temp) {
+                *(sortedArray + j) = *(sortedArray + (j - gap));
+                j -= gap;
+            }
+
+            // Place temp in its correct location
+            *(sortedArray + j) = temp;
+        }
+    }
+
+    return sortedArray;
+}

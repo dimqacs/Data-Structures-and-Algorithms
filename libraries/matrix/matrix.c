@@ -75,16 +75,24 @@ void fillMatrixManually(int ***matrix, const unsigned int newSize, const unsigne
     displayMatrix(*matrix, newSize, "", true);
 }
 
-void fillMatrixRandomly(int ***matrix, const int newSize, const unsigned int oldSize) {
+void fillMatrixRandomly(int ***matrix, const unsigned int newSize, const unsigned int oldSize) {
     if (!allocateMatrixMemory(matrix, newSize, oldSize)) {
         return;
     }
 
     for (unsigned int i = 0; i < newSize; i++) {
         for (unsigned int j = 0; j < newSize; j++) {
-            *(*(*matrix + i) + j) = getRandomNumber(-newSize, newSize);
+            *(*(*matrix + i) + j) = getRandomNumber(-(int)newSize, (int)newSize);
         }
     }
 
     displayMatrix(*matrix, newSize, "", true);
+}
+
+void equalMatrix(int ***matrixFrom, int ***matrixTo, const unsigned int size) {
+    for (int row = 0; row < size; row++) {
+        for (int column = 0; column < size; column++) {
+            *(*(*matrixTo + row) + column) = *(*(*matrixFrom + row) + column);
+        }
+    }
 }

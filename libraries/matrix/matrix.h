@@ -7,4 +7,6 @@ bool allocateMatrixMemory(int ***matrix, unsigned int newSize, unsigned int oldS
 
 void fillMatrixManually(int ***matrix, unsigned int newSize, unsigned int oldSize);
 
-void fillMatrixRandomly(int ***matrix, int newSize, unsigned int oldSize);
+void fillMatrixRandomly(int ***matrix, unsigned int newSize, unsigned int oldSize);
+
+void equalMatrix(int ***matrixFrom, int ***matrixTo, unsigned int size);
