@@ -27,12 +27,16 @@ void displayMatrix(int *const *matrix, const unsigned int size, const char *text
     }
 }
 
+void freeMatrix(int ***matrix, const unsigned int size) {
+    for (unsigned int i = 0; i < size; i++) {
+        free(*(*matrix + i));
+    }
+    free(*matrix);
+}
+
 bool allocateMatrixMemory(int ***matrix, const unsigned int newSize, const unsigned int oldSize) {
     if (*matrix) {
-        for (unsigned int i = 0; i < oldSize; i++) {
-            free(*(*matrix + i));
-        }
-        free(*matrix);
+        freeMatrix(matrix, oldSize);
     }
 
     *matrix = calloc(newSize, sizeof(int *));
@@ -45,11 +49,8 @@ bool allocateMatrixMemory(int ***matrix, const unsigned int newSize, const unsig
         *(*matrix + i) = calloc(newSize, sizeof(int));
 
         if (!*(*matrix + i)) {
-            for (unsigned int j = 0; j < i; j++) {
-                free(*(*matrix + j));
-            }
+            freeMatrix(matrix, i);
 
-            free(*matrix);
             handleNext("Memory allocation failed.");
             return false;
         }
@@ -66,7 +67,7 @@ void fillMatrixManually(int ***matrix, const unsigned int newSize, const unsigne
     for (unsigned int i = 0; i < newSize; i++) {
         for (unsigned int j = 0; j < newSize; j++) {
             char prompt[64];
-            snprintf(prompt, sizeof(prompt), "Introduce the %u value from the row %u: ", j + 1, i + 1);
+            snprintf(prompt, sizeof(prompt), "Introduce the %u value from the row %u: ", j, i);
 
             readInt(prompt, *(*matrix + i) + j);
         }

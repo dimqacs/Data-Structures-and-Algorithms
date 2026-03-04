@@ -46,7 +46,7 @@ void fillArrayManually(int **array, const unsigned int size) {
 
     for (unsigned int i = 0; i < size; i++) {
         char prompt[64];
-        snprintf(prompt, sizeof(prompt), "Introduce the %u value: ", i + 1);
+        snprintf(prompt, sizeof(prompt), "Introduce the %u value: ", i);
 
         readInt(prompt, *array + i);
     }

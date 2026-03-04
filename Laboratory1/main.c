@@ -159,9 +159,9 @@ int main(void) {
 
                 // Condition A
                 int multiplication = 1;
-                int **sortedMatrixA = NULL;
-                allocateMatrixMemory(&sortedMatrixA, matrixSize, 0);
-                equalMatrix(&matrix, &sortedMatrixA, matrixSize);
+                int **sortedMatrix = NULL;
+                allocateMatrixMemory(&sortedMatrix, matrixSize, 0);
+                equalMatrix(&matrix, &sortedMatrix, matrixSize);
 
                 for (unsigned int row = 0; row < matrixSize; row++) {
                     multiplication *= *(*(matrix + row) + 0);
@@ -178,10 +178,10 @@ int main(void) {
                     mainDiagonal = quickSortAscending(mainDiagonal, matrixSize);
 
                     for (unsigned int row = 0; row < matrixSize; row++) {
-                        *(*(sortedMatrixA + row) + row) = *(mainDiagonal + row);
+                        *(*(sortedMatrix + row) + row) = *(mainDiagonal + row);
                     }
 
-                    displayMatrix(sortedMatrixA, matrixSize,
+                    displayMatrix(sortedMatrix, matrixSize,
                                   "\nA: Multiplication of first column in bigger then global constant K - sorting the main diagonal of Matrix Ascending using Quick Sort:\n",
                                   false);
 
@@ -197,17 +197,81 @@ int main(void) {
                     secondaryDiagonal = shellSortDescending(secondaryDiagonal, matrixSize);
 
                     for (unsigned int row = 0; row < matrixSize; row++) {
-                        *(*(sortedMatrixA + row) + matrixSize - row - 1) = *(secondaryDiagonal + row);
+                        *(*(sortedMatrix + row) + matrixSize - row - 1) = *(secondaryDiagonal + row);
                     }
 
-                    displayMatrix(sortedMatrixA, matrixSize,
+                    displayMatrix(sortedMatrix, matrixSize,
                                   "\nA: Multiplication of first column is not bigger then global constant K - sorting the secondary diagonal of Matrix Descending using Shell Sort:\n",
                                   false);
 
                     free(secondaryDiagonal);
                 }
 
-                handleNext("Temporary...");
+                // Condition B
+                equalMatrix(&matrix, &sortedMatrix, matrixSize);
+
+                int minValue = **(matrix);
+                unsigned int minValueRow = 0, minValueColumn = 0;
+                for (unsigned int row = 0; row < matrixSize; row++) {
+                    for (unsigned int column = 0; column < matrixSize; column++) {
+                        if (*(*(matrix + row) + column) >= minValue) {
+                            continue;
+                        }
+
+                        minValue = *(*(matrix + row) + column);
+                        minValueRow = row;
+                        minValueColumn = column;
+                    }
+                }
+
+                bool condition = minValueRow % 2 == 1 ? true : false;
+
+                if (!condition) {
+                    for (unsigned int row = 1; row < matrixSize && !condition; row += 2) {
+                        for (unsigned int column = 0; column < matrixSize; column++) {
+                            if (*(*(matrix + row) + column) == minValue) {
+                                condition = true;
+                                minValueRow = row;
+                                break;
+                            }
+                        }
+                    }
+                }
+                int *sortedLine = NULL;
+                allocateArrayMemory(&sortedLine, matrixSize);
+
+                if (condition) {
+                    for (unsigned int column = 0; column < matrixSize; column++) {
+                        *(sortedLine + column) = *(*(matrix + minValueRow) + column);
+                    }
+
+                    sortedLine = selectionSortAscending(sortedLine, matrixSize);
+
+                    for (unsigned int column = 0; column < matrixSize; column++) {
+                        *(*(sortedMatrix + minValueRow) + column) = *(sortedLine + column);
+                    }
+
+                    displayMatrix(sortedMatrix, matrixSize,
+                                  "\nB: The minimal value is at least 1 time on odd row - sorting the row of minimum value of Matrix Ascending using Selection Sort:\n",
+                                  true);
+                } else {
+                    for (unsigned int row = 0; row < matrixSize; row++) {
+                        *(sortedLine + row) = *(*(matrix + row) + minValueColumn);
+                    }
+
+                    sortedLine = insertionSortDescending(sortedLine, matrixSize);
+
+                    for (unsigned int row = 0; row < matrixSize; row++) {
+                        *(*(sortedMatrix + row) + minValueColumn) = *(sortedLine + row);
+                    }
+
+                    displayMatrix(sortedMatrix, matrixSize,
+                                  "\nB: The minimal value is not on odd row - sorting the column of minimum value of Matrix Descending using Insertion Sort:\n",
+                                  true);
+                }
+
+                free(sortedLine);
+                freeMatrix(&sortedMatrix, matrixSize);
                 break;
             case 9:
                 free(array);

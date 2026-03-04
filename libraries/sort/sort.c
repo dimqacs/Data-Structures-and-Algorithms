@@ -383,3 +383,54 @@ int* shellSortDescending(const int* array, const unsigned int size) {
 
     return sortedArray;
 }
+
+int *selectionSortAscending(const int *array, const unsigned int size) {
+    int *sortedArray = NULL;
+    allocateArrayMemory(&sortedArray, size);
+    equalArrays(array, sortedArray, size);
+
+    for (int index = 0; index < size - 1; index++) {
+
+        // Assume the current position holds
+        // the minimum element
+        int minimum_index = index;
+
+        // Iterate through the unsorted portion
+        // to find the actual minimum
+        for (int secondIndex = index + 1; secondIndex < size; secondIndex++) {
+            if (*(sortedArray + secondIndex) < *(sortedArray + minimum_index)) {
+                // Update minimum_index if a smaller element is found
+                minimum_index = secondIndex;
+            }
+        }
+
+        // Move minimum element to its
+        // correct position
+        swap(sortedArray + minimum_index, sortedArray + index);
+    }
+
+    return sortedArray;
+}
+
+int *insertionSortDescending(const int *array, const unsigned int size) {
+    int *sortedArray = NULL;
+    allocateArrayMemory(&sortedArray, size);
+    equalArrays(array, sortedArray, size);
+
+    for (int index = 1; index < size; index++) {
+        const int key = *(sortedArray + index);
+        int secondIndex = index - 1;
+
+        /* Move elements of array[0...index-1], that are
+           greater than key, to one position ahead
+           of their current position */
+        while (secondIndex >= 0 && *(sortedArray + secondIndex) < key) {
+            *(sortedArray + (secondIndex + 1)) = *(sortedArray + secondIndex);
+            secondIndex--;
+        }
+
+        *(sortedArray + (secondIndex + 1)) = key;
+    }
+
+    return sortedArray;
+}
