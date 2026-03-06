@@ -37,7 +37,7 @@ int main(void) {
 
     printf("-------------------------Welcome-------------------------\n");
 
-    while (true) {
+    while (true) { // NOLINT
         displayMenu();
 
         readUnsignedInt("Introduce an option: ", &option);
@@ -169,7 +169,7 @@ int main(void) {
 
                 if (multiplication > K) {
                     int *mainDiagonal = NULL;
-                    allocateArrayMemory(&mainDiagonal, matrixSize);
+                    allocateArrayMemory((void**)&mainDiagonal, matrixSize, sizeof(int));
 
                     for (unsigned int row = 0; row < matrixSize; row++) {
                         *(mainDiagonal + row) = *(*(matrix + row) + row);
@@ -188,7 +188,7 @@ int main(void) {
                     free(mainDiagonal);
                 } else {
                     int *secondaryDiagonal = NULL;
-                    allocateArrayMemory(&secondaryDiagonal, matrixSize);
+                    allocateArrayMemory((void**)&secondaryDiagonal, matrixSize, sizeof(int));
 
                     for (unsigned int row = 0; row < matrixSize; row++) {
                         *(secondaryDiagonal + row) = *(*(matrix + row) + matrixSize - row - 1);
@@ -238,7 +238,7 @@ int main(void) {
                     }
                 }
                 int *sortedLine = NULL;
-                allocateArrayMemory(&sortedLine, matrixSize);
+                allocateArrayMemory((void**)&sortedLine, matrixSize, sizeof(int));
 
                 if (condition) {
                     for (unsigned int column = 0; column < matrixSize; column++) {

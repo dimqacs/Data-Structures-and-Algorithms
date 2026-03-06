@@ -7,20 +7,6 @@
 char **menuOptions = NULL;
 unsigned int menuOptionCount = 0;
 
-void clearTerminal() {
-#ifdef _WIN32
-    system("clear");
-#else
-    system("clear");
-#endif
-}
-
-void clearBuffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF) {
-    }
-}
-
 void handleNext(char message[]) {
     printf("%s \nPress Enter to continue...", message);
     clearBuffer();

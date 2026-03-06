@@ -3,7 +3,7 @@
 
 void displayArray(const int *array, unsigned int size, const char *text, bool handleNextFlag);
 
-bool allocateArrayMemory(int **array, unsigned int size);
+bool allocateArrayMemory(void **array, size_t count, size_t elementSize);
 
 void fillArrayManually(int **array, unsigned int size);
 

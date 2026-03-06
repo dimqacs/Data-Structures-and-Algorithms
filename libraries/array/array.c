@@ -24,12 +24,12 @@ void displayArray(const int *array, const unsigned int size, const char *text, c
     }
 }
 
-bool allocateArrayMemory(int **array, const unsigned int size) {
+bool allocateArrayMemory(void **array, const size_t count, const size_t elementSize) {
     if (*array) {
         free(*array);
     }
 
-    *array = calloc(size, sizeof(int));
+    *array = calloc(count, elementSize);
 
     if (!*array) {
         handleNext("Memory allocation failed.");
@@ -40,7 +40,7 @@ bool allocateArrayMemory(int **array, const unsigned int size) {
 }
 
 void fillArrayManually(int **array, const unsigned int size) {
-    if (!allocateArrayMemory(array, size)) {
+    if (!allocateArrayMemory((void**)array, size, sizeof(int))) {
         return;
     }
 
@@ -55,7 +55,7 @@ void fillArrayManually(int **array, const unsigned int size) {
 }
 
 void fillArrayRandomly(int **array, const int size) {
-    if (!allocateArrayMemory(array, size)) {
+    if (!allocateArrayMemory((void**)array, size, sizeof(int))) {
         return;
     }
 
