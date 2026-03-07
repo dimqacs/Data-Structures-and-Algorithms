@@ -9,8 +9,8 @@ void fillArrayManually(int **array, unsigned int size);
 
 void fillArrayRandomly(int **array, int size);
 
-void equalArrays(const int *arrayFrom, int *arrayTo, unsigned int size);
+void equalArrays(const void *arrayFrom, void *arrayTo, unsigned int count, size_t elementSize);
 
-void swap(int *valueFrom, int *valueTo);
+void swap(void *valueFrom, void *valueTo, size_t size);
 
 bool evenSmallerThenOdd(const int *array, unsigned int size);

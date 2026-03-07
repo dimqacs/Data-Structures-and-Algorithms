@@ -3,6 +3,9 @@
 #include <stdbool.h>
 
 #include "array.h"
+
+#include <string.h>
+
 #include "read.h"
 #include "menu.h"
 #include "math.h"
@@ -66,16 +69,15 @@ void fillArrayRandomly(int **array, const int size) {
     displayArray(*array, size, "", true);
 }
 
-void equalArrays(const int *arrayFrom, int *arrayTo, const unsigned int size) {
-    for (int index = 0; index < size; index++) {
-        *(arrayTo + index) = *(arrayFrom + index);
-    }
+void equalArrays(const void *arrayFrom, void *arrayTo, const unsigned int count, const size_t elementSize) {
+    memcpy(arrayTo, arrayFrom, count * elementSize);
 }
 
-void swap(int *valueFrom, int *valueTo) {
-    const int temp = *valueFrom;
-    *valueFrom = *valueTo;
-    *valueTo = temp;
+void swap(void *valueFrom, void *valueTo, const size_t size) {
+    char temp[size];
+    memcpy(temp, valueFrom, size);
+    memcpy(valueFrom, valueTo, size);
+    memcpy(valueTo, temp, size);
 }
 
 bool evenSmallerThenOdd(const int *array, const unsigned int size) {

@@ -40,13 +40,25 @@ int main(void) {
                 readUnsignedInt("Enter the size of the Array: ", &arraySize);
 
                 if (arraySize == 0) {
-                    handleNext("Cannot create Array with size 0");
+                    handleNext("Cannot create Array with size 0.");
                     break;
                 }
 
                 fillProductArrayManually(&array, arraySize);
                 break;
             case 3:
+                if (arraySize == 0) {
+                    handleNext("There is nothing to sort, try filling the Array with Products first.");
+                    break;
+                }
+
+                float *prices = NULL;
+                allocateArrayMemory((void**)&prices, arraySize, sizeof(float));
+
+                for (unsigned int index = 0; index < arraySize; index++) {
+                    *(prices + index) = (array + index)->price;
+                }
+
 
             case 4:
                 free(array);
