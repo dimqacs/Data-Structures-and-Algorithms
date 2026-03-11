@@ -117,7 +117,7 @@ int main(void) {
                     ? displayArray(mergeSortAscending(array, arraySize), arraySize,
                                    "\nC: There are minimum two prime numbers - sorting Ascending Array using Merge Sort: ",
                                    true)
-                    : displayArray(bubbleSortDescending(array, arraySize), arraySize,
+                    : displayArray(bubbleSortDescending(array, arraySize, sizeof(int), compareInt), arraySize,
                                    "\nC: There are less then two prime numbers - sorting Descending Array using Bubble Sort: ",
                                    true);
 
@@ -175,7 +175,7 @@ int main(void) {
                         *(mainDiagonal + row) = *(*(matrix + row) + row);
                     }
 
-                    mainDiagonal = quickSortAscending(mainDiagonal, matrixSize);
+                    mainDiagonal = quickSortAscending(mainDiagonal, matrixSize, sizeof(int), compareInt);
 
                     for (unsigned int row = 0; row < matrixSize; row++) {
                         *(*(sortedMatrix + row) + row) = *(mainDiagonal + row);

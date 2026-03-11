@@ -59,6 +59,10 @@ int main(void) {
                     *(prices + index) = (array + index)->price;
                 }
 
+                prices = quickSortAscending(prices, arraySize, sizeof(float), compareFloat);
+
+
+                prices = bubbleSortDescending(prices, arraySize, sizeof(float), compareFloat);
 
             case 4:
                 free(array);

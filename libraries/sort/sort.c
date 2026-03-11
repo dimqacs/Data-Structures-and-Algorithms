@@ -37,8 +37,8 @@ void heapify(int *array, const unsigned int size, const int index) {
 
 int *heapSortAscending(const int *array, const unsigned int size) {
     int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
-    equalArrays((void*)array, sortedArray, size, sizeof(int));
+    allocateArrayMemory((void **) &sortedArray, size, sizeof(int));
+    equalArrays((void *) array, sortedArray, size, sizeof(int));
 
     // Build heap (rearrange vector)
     for (int index = (int) size / 2 - 1; index >= 0; index--) {
@@ -71,7 +71,7 @@ int *countSortDescending(const int *array, const unsigned int size) {
 
     // Create and initialize countArray array
     int *countArray = NULL;
-    allocateArrayMemory((void**)&countArray, range, sizeof(int));
+    allocateArrayMemory((void **) &countArray, range, sizeof(int));
 
     // Count frequency of each element with shift
     for (int index = 0; index < size; index++) {
@@ -86,7 +86,7 @@ int *countSortDescending(const int *array, const unsigned int size) {
     // Build output array
 
     int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
+    allocateArrayMemory((void **) &sortedArray, size, sizeof(int));
 
     for (int index = (int) size - 1; index >= 0; index--) {
         const int value = *(array + index);
@@ -103,10 +103,10 @@ int *countSortDescending(const int *array, const unsigned int size) {
 
 void countingSortDescending(int *array, const unsigned int size, const int exponent, const int minValue) {
     int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
+    allocateArrayMemory((void **) &sortedArray, size, sizeof(int));
 
     int *countArray = NULL;
-    allocateArrayMemory((void**)&countArray, 10, sizeof(int));
+    allocateArrayMemory((void **) &countArray, 10, sizeof(int));
 
     // Store count of occurrences in count[]
     for (int index = 0; index < size; index++) {
@@ -138,9 +138,9 @@ void countingSortDescending(int *array, const unsigned int size, const int expon
 
 int *radixSortDescending(const int *array, const unsigned int size) {
     int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
+    allocateArrayMemory((void **) &sortedArray, size, sizeof(int));
 
-    equalArrays((void*)array, sortedArray, size, sizeof(int));
+    equalArrays((void *) array, sortedArray, size, sizeof(int));
 
     int maxValue = *array;
     int minValue = *array;
@@ -169,9 +169,9 @@ int getNextGap(int gap) {
 
 int *combSortAscending(const int *array, const unsigned int size) {
     int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
+    allocateArrayMemory((void **) &sortedArray, size, sizeof(int));
 
-    equalArrays((void*)array, sortedArray, size, sizeof(int));
+    equalArrays((void *) array, sortedArray, size, sizeof(int));
 
     // Initialize gap
     int gap = (int) size;
@@ -209,10 +209,10 @@ void merge(int *array, const int left, const int middle, const int right) {
 
     // Create temp arrays
     int *leftArray = NULL;
-    allocateArrayMemory((void**)&leftArray, leftArrayCount, sizeof(int));
+    allocateArrayMemory((void **) &leftArray, leftArrayCount, sizeof(int));
 
     int *rightArray = NULL;
-    allocateArrayMemory((void**)&rightArray, rightArrayCount, sizeof(int));
+    allocateArrayMemory((void **) &rightArray, rightArrayCount, sizeof(int));
 
     // Copy data to temp arrays leftArray[] and rightArray[]
     for (int index = 0; index < leftArrayCount; index++) {
@@ -273,24 +273,27 @@ void mergeSort(int *array, const int left, const int right) {
 
 int *mergeSortAscending(const int *array, const unsigned int size) {
     int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
-    equalArrays((void*)array, sortedArray, size, sizeof(int));
+    allocateArrayMemory((void **) &sortedArray, size, sizeof(int));
+    equalArrays((void *) array, sortedArray, size, sizeof(int));
 
     mergeSort(sortedArray, 0, (int) size - 1);
 
     return sortedArray;
 }
 
-int *bubbleSortDescending(const int *array, const unsigned int size) {
-    int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
-    equalArrays((void*)array, sortedArray, size, sizeof(int));
+void *bubbleSortDescending(const void *array, const unsigned int size, const size_t elementSize, const compare_t compare) {
+    void *sortedArray = NULL;
+    allocateArrayMemory(&sortedArray, size, elementSize);
+    equalArrays(array, sortedArray, size, elementSize);
+
+    char *arr = sortedArray;
 
     for (int index = 0; index < size - 1; index++) {
         bool swapped = false;
-        for (int secondIndex = 0; secondIndex < size - index - 1; secondIndex++) {
-            if (*(sortedArray + secondIndex) < *(sortedArray + secondIndex + 1)) {
-                swap(sortedArray + secondIndex, sortedArray + (secondIndex + 1), sizeof(int));
+
+        for (unsigned int secondIndex = 0; secondIndex < size - index - 1; secondIndex++) {
+            if (compare(arr + secondIndex * elementSize, arr + (secondIndex + 1) * elementSize) < 0) {
+                swap(arr + secondIndex * elementSize, arr + (secondIndex + 1) * elementSize, elementSize);
                 swapped = true;
             }
         }
@@ -304,9 +307,10 @@ int *bubbleSortDescending(const int *array, const unsigned int size) {
     return sortedArray;
 }
 
-int partition(int *array, const int low, const int high) {
+int partition(void *array, const int low, const int high, const size_t elementSize, const compare_t compare) {
     // Choose the pivot
-    const int pivot = *(array + high);
+    char *arr = array;
+    const void *pivot = arr + high * elementSize;
 
     // Index of smaller element and indicates
     // the right position of pivot found so far
@@ -316,55 +320,51 @@ int partition(int *array, const int low, const int high) {
     // elements to the left side. Elements from low to
     // i are smaller after every iteration
     for (int j = low; j < high; j++) {
-
-        if (*(array + j) >= pivot) {
+        if (compare(arr + j * elementSize, pivot) >= 0) {
             continue;
         }
 
         index++;
-        swap(array + index, array + j, sizeof(int));
+        swap(arr + index * elementSize, arr + j * elementSize, elementSize);
     }
 
     // Move pivot after smaller elements and
     // return its position
-    swap(array + (index + 1), array + high, sizeof(int));
+    swap(arr + (index + 1) * elementSize, arr + high * elementSize, elementSize);
     return index + 1;
 }
 
-void quickSort(int *array, const int low, const int high) {
+void quickSort(void *array, const int low, const int high, const size_t elementSize, const compare_t compare) {
     if (low < high) {
-        
         // partition return index of pivot
-        const int part = partition(array, low, high);
+        const int part = partition(array, low, high, elementSize, compare);
 
         // recursion calls for smaller elements
         // and greater or equals elements
-        quickSort(array, low, part - 1);
-        quickSort(array, part + 1, high);
+        quickSort(array, low, part - 1, elementSize, compare);
+        quickSort(array, part + 1, high, elementSize, compare);
     }
 }
 
-int *quickSortAscending(const int *array, const unsigned int size) {
-    int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
-    equalArrays((void*)array, sortedArray, size, sizeof(int));
-    
-    quickSort(sortedArray, 0, (int)size - 1);
-    
+void *quickSortAscending(const void *array, const unsigned int size, const size_t elementSize, const compare_t compare) {
+    void *sortedArray = NULL;
+    allocateArrayMemory(&sortedArray, size, elementSize);
+    equalArrays(array, sortedArray, size, elementSize);
+
+    quickSort(sortedArray, 0, (int) size - 1, elementSize, compare);
+
     return sortedArray;
 }
 
-int* shellSortDescending(const int* array, const unsigned int size) {
+int *shellSortDescending(const int *array, const unsigned int size) {
     int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
-    equalArrays((void*)array, sortedArray, size, sizeof(int));
+    allocateArrayMemory((void **) &sortedArray, size, sizeof(int));
+    equalArrays((void *) array, sortedArray, size, sizeof(int));
 
     // Start with a large gap, then reduce it step by step
-    for (int gap = (int)size / 2; gap > 0; gap /= 2) {
-
+    for (int gap = (int) size / 2; gap > 0; gap /= 2) {
         // Perform a "gapped" insertion sort for this gap size
         for (int index = gap; index < size; index++) {
-
             // Current element to be placed correctly
             const int temp = *(sortedArray + index);
             int j = index;
@@ -385,11 +385,10 @@ int* shellSortDescending(const int* array, const unsigned int size) {
 
 int *selectionSortAscending(const int *array, const unsigned int size) {
     int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
-    equalArrays((void*)array, sortedArray, size, sizeof(int));
+    allocateArrayMemory((void **) &sortedArray, size, sizeof(int));
+    equalArrays((void *) array, sortedArray, size, sizeof(int));
 
     for (int index = 0; index < size - 1; index++) {
-
         // Assume the current position holds
         // the minimum element
         int minimum_index = index;
@@ -413,8 +412,8 @@ int *selectionSortAscending(const int *array, const unsigned int size) {
 
 int *insertionSortDescending(const int *array, const unsigned int size) {
     int *sortedArray = NULL;
-    allocateArrayMemory((void**)&sortedArray, size, sizeof(int));
-    equalArrays((void*)array, sortedArray, size, sizeof(int));
+    allocateArrayMemory((void **) &sortedArray, size, sizeof(int));
+    equalArrays((void *) array, sortedArray, size, sizeof(int));
 
     for (int index = 1; index < size; index++) {
         const int key = *(sortedArray + index);
