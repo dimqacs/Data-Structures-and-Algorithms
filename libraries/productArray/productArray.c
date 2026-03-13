@@ -36,7 +36,7 @@ void fillProductArrayManually(Product **array, const unsigned int size) {
     for (unsigned int index = 0; index < size; index++) {
         Product product;
 
-        printf("Introduce information of product number %d:\n", index + 1);
+        printf("\nIntroduce information of product number %d:\n", index + 1);
 
         printf("Introduce name: ");
         scanf(" %[^\n]", product.name);
@@ -59,4 +59,11 @@ void fillProductArrayManually(Product **array, const unsigned int size) {
     }
 
     displayProductArray(*array, size, "The Array with Products: \n", true);
+}
+
+int compareProductsByPrice(const void *a, const void *b) {
+    const Product *productA = a;
+    const Product *productB = b;
+
+    return productA->price > productB->price ? 1 : productA->price < productB->price ? -1 : 0;
 }

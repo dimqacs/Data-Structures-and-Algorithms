@@ -3,10 +3,8 @@
 #include <stdbool.h>
 
 #include "menu.h"
-#include "array.h"
 #include "read.h"
 #include "sort.h"
-#include "math.h"
 #include "productArray.h"
 
 int main(void) {
@@ -52,17 +50,21 @@ int main(void) {
                     break;
                 }
 
-                float *prices = NULL;
-                allocateArrayMemory((void**)&prices, arraySize, sizeof(float));
+                displayProductArray(array, arraySize, "\nThe Original Products Array: \n", false);
 
-                for (unsigned int index = 0; index < arraySize; index++) {
-                    *(prices + index) = (array + index)->price;
-                }
+                displayProductArray(
+                    quickSortAscending(array, arraySize, sizeof(Product), compareProductsByPrice),
+                    arraySize,
+                    "\nSorted Products Array Ascending based on Price field using Quick Sort:\n",
+                    false
+                );
 
-                prices = quickSortAscending(prices, arraySize, sizeof(float), compareFloat);
-
-
-                prices = bubbleSortDescending(prices, arraySize, sizeof(float), compareFloat);
+                displayProductArray(
+                    bubbleSortDescending(array, arraySize, sizeof(Product), compareProductsByPrice),
+                    arraySize,
+                    "\nSorted Products Array Descending based on Price field using Bubble Sort:\n",
+                    true
+                );
 
             case 4:
                 free(array);

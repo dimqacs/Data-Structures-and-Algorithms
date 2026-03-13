@@ -12,3 +12,5 @@ typedef struct {
 void displayProductArray(const Product *array, unsigned int size, const char *text, bool handleNextFlag);
 
 void fillProductArrayManually(Product **array, unsigned int size);
+
+int compareProductsByPrice(const void *a, const void *b);
