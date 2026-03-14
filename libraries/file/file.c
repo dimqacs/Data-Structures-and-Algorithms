@@ -1,13 +1,10 @@
 #include <fcntl.h>
 #include <unistd.h>
-#include <stdbool.h>
 #include <stdio.h>
-
-#include "file.h"
-
 #include <stdlib.h>
 #include <string.h>
 
+#include "file.h"
 #include "array.h"
 
 bool createFile(const char *filename) {

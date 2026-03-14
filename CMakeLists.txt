@@ -19,5 +19,5 @@ add_subdirectory(Laboratory1) #Variant 5
 add_subdirectory(Laboratory2) #Variant 5
 add_subdirectory(Laboratory3) #Variant 5
 add_subdirectory(Laboratory4) #Variant 3
-add_subdirectory(Laboratory5)
-add_subdirectory(Laboratory6)
+add_subdirectory(Laboratory5) #Variant 22
+add_subdirectory(Laboratory6) #Variant 13

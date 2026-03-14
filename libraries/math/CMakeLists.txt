@@ -9,5 +9,4 @@ target_include_directories(math
 
 target_link_libraries(math
         PUBLIC
-        array
 )

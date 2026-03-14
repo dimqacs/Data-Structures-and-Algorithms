@@ -1,5 +1,4 @@
 #include <time.h>
-#include <bits/time.h>
 
 #include "math.h"
 

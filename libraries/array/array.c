@@ -1,15 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-
-#include "array.h"
-
 #include <string.h>
 
+#include "array.h"
 #include "read.h"
 #include "menu.h"
 #include "math.h"
-#include "../productArray/productArray.h"
 
 void displayArray(const int *array, const unsigned int size, const char *text, const bool handleNextFlag) {
     if (size == 0) {

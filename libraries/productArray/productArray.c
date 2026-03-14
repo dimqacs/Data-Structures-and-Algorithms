@@ -1,11 +1,8 @@
 #include <stdio.h>
-#include <stdbool.h>
-
-#include "productArray.h"
-
 #include <stdlib.h>
 #include <string.h>
 
+#include "productArray.h"
 #include "array.h"
 #include "read.h"
 #include "menu.h"
