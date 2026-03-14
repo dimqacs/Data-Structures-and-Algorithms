@@ -12,5 +12,4 @@ target_link_libraries(productArray
         array
         read
         menu
-        math
 )
