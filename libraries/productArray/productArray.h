@@ -18,3 +18,11 @@ bool displayProductArray(const Product *array, unsigned int size, const char *te
 void fillProductArrayManually(Product **array, unsigned int size, bool handleNextFlag);
 
 int compareProductsByPrice(const void *a, const void *b);
+
+int compareProductsByCountry(const void *a, const void *b);
+
+void productSerializer(FILE *file, const void *element);
+
+void productDeserializer(const char *line, void *element);
+
+void productCSVHeader(FILE *file);

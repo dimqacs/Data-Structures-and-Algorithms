@@ -2,6 +2,10 @@
 #include <stdbool.h>
 
 #include "productArray.h"
+
+#include <stdlib.h>
+#include <string.h>
+
 #include "array.h"
 #include "read.h"
 #include "menu.h"
@@ -35,7 +39,7 @@ void displayProduct(const Product *product) {
     printf("  Price      : %.2f\n\n", product->price);
 }
 
-bool displayProductArray(const Product *array, const unsigned int size, const char *text, const bool handleNextFlag){
+bool displayProductArray(const Product *array, const unsigned int size, const char *text, const bool handleNextFlag) {
     if (size == 0) {
         handleNext("The Array is empty, try introducing values first.");
         return false;
@@ -56,7 +60,7 @@ bool displayProductArray(const Product *array, const unsigned int size, const ch
 }
 
 void fillProductArrayManually(Product **array, const unsigned int size, const bool handleNextFlag) {
-    if (!allocateArrayMemory((void**)array, size, sizeof(Product))) {
+    if (!allocateArrayMemory((void **) array, size, sizeof(Product))) {
         return;
     }
 
@@ -73,4 +77,43 @@ int compareProductsByPrice(const void *a, const void *b) {
     const Product *productB = b;
 
     return productA->price > productB->price ? 1 : productA->price < productB->price ? -1 : 0;
+}
+
+int compareProductsByCountry(const void *a, const void *b) {
+    const Product *productA = a;
+    const Product *productB = b;
+
+    return strcmp(productA->country, productB->country);
+}
+
+void productSerializer(FILE *file, const void *element) {
+    const Product *product = element;
+
+    fprintf(file, "%s,%s,%s,%u,%.2f\n",
+            product->name,
+            product->country,
+            product->manufacturer,
+            product->articleID,
+            product->price);
+}
+
+void productDeserializer(const char *line, void *element) {
+    Product *p = element;
+
+    char articleIdString[32], priceIdString[32];
+
+    sscanf(line, "%49[^,],%49[^,],%49[^,],%31[^,],%31s",
+           p->name,
+           p->country,
+           p->manufacturer,
+           articleIdString,
+           priceIdString
+    );
+
+    p->articleID = (int) strtoul(articleIdString, NULL, 10);
+    p->price = strtof(priceIdString, NULL);
+}
+
+void productCSVHeader(FILE *file) {
+    fprintf(file, "name,country,manufacturer,articleId,price\n");
 }

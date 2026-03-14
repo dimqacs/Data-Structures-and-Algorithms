@@ -14,7 +14,7 @@ int main(void) {
 
     Product *array = NULL, product;
 
-    const char filePath[] = "./Laboratory3/products.txt";
+    const char filePath[] = "./Laboratory3/products";
 
     const char *options[] = {
         "Create new File and fill it with Products",

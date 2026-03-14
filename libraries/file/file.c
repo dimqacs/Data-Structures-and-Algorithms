@@ -5,9 +5,10 @@
 
 #include "file.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "array.h"
-#include "menu.h"
-#include "read.h"
 
 bool createFile(const char *filename) {
     const int fileDescriptor = open(filename, O_CREAT | O_EXCL | O_WRONLY, 0755);
@@ -29,7 +30,8 @@ bool deleteFile(const char *filename) {
     return false;
 }
 
-bool writeArrayToFile(const char *filename, const void *array, const unsigned int arraySize, const size_t elementSize, const char *mode) {
+bool writeArrayToFile(const char *filename, const void *array, const unsigned int arraySize, const size_t elementSize,
+                      const char *mode) {
     FILE *file = fopen(filename, mode);
 
     if (file == NULL) {
@@ -76,4 +78,60 @@ bool fileExists(const char *filename) {
     }
 
     return false;
+}
+
+bool writeArrayToCSV(const char *filename, const void *array, const unsigned int size, const size_t elementSize, const char *mode, const serializer_t serializer, const header_t writeHeader) {
+    FILE *file = fopen(filename, mode);
+
+    if (!file) {
+        return false;
+    }
+
+    if (writeHeader) {
+        writeHeader(file);
+    }
+
+    for (unsigned int index = 0; index < size; index++) {
+        serializer(file, (char *) array + index * elementSize);
+    }
+
+    fclose(file);
+
+    return true;
+}
+
+void *readArrayFromCSV(const char *filename, unsigned int *size, const size_t elementSize, const deserializer_t deserializer) {
+    FILE *file = fopen(filename, "r");
+
+    if (!file) {
+        return NULL;
+    }
+
+    char line[256];
+    fgets(line, sizeof(line), file);
+
+    void *array = NULL;
+    unsigned int count = 0;
+
+    while (fgets(line, sizeof(line), file)) {
+        line[strcspn(line, "\r\n")] = 0;
+
+        void *tmp = realloc(array, (count + 1) * elementSize);
+
+        if (!tmp) {
+            free(array);
+            fclose(file);
+            return NULL;
+        }
+
+        array = tmp;
+
+        deserializer(line, (char*)array + count * elementSize);
+        count++;
+    }
+
+    fclose(file);
+    *size = count;
+
+    return array;
 }
