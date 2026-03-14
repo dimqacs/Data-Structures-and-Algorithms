@@ -42,7 +42,7 @@ int main(void) {
                     break;
                 }
 
-                fillProductArrayManually(&array, arraySize);
+                fillProductArrayManually(&array, arraySize, true);
                 break;
             case 3:
                 if (arraySize == 0) {

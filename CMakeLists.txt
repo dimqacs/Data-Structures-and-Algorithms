@@ -12,11 +12,12 @@ add_subdirectory(libraries/sort)
 add_subdirectory(libraries/math)
 add_subdirectory(libraries/matrix)
 add_subdirectory(libraries/productArray)
+add_subdirectory(libraries/file)
 
 # Projects
 add_subdirectory(Laboratory1) #Variant 5
 add_subdirectory(Laboratory2) #Variant 5
-add_subdirectory(Laboratory3)
+add_subdirectory(Laboratory3) #Variant 5
 add_subdirectory(Laboratory4)
 add_subdirectory(Laboratory5)
 add_subdirectory(Laboratory6)

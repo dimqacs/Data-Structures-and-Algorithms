@@ -9,6 +9,7 @@
 #include "read.h"
 #include "menu.h"
 #include "math.h"
+#include "../productArray/productArray.h"
 
 void displayArray(const int *array, const unsigned int size, const char *text, const bool handleNextFlag) {
     if (size == 0) {
@@ -27,7 +28,7 @@ void displayArray(const int *array, const unsigned int size, const char *text, c
     }
 }
 
-bool allocateArrayMemory(void **array, const size_t count, const size_t elementSize) {
+bool allocateArrayMemory(void **array, const unsigned int count, const size_t elementSize) {
     if (*array) {
         free(*array);
     }
@@ -93,4 +94,24 @@ bool evenSmallerThenOdd(const int *array, const unsigned int size) {
     }
 
     return even < odd / oddCount ? true : false;
+}
+
+void *removeElement(const void *array, const unsigned int count, const unsigned int elementIndex, const size_t elementSize) {
+    void *resultArray = NULL;
+    if (!allocateArrayMemory(&resultArray, count, elementSize)) {
+        return NULL;
+    }
+
+    unsigned int destIndex = 0;
+    for (unsigned int srcIndex = 0; srcIndex < count + 1; srcIndex++) {
+        if (elementIndex == srcIndex) {
+            continue;
+        }
+
+        memcpy(resultArray + destIndex * elementSize,array + srcIndex * elementSize, elementSize);
+
+        destIndex++;
+    }
+
+    return resultArray;
 }
