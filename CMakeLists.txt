@@ -13,6 +13,7 @@ add_subdirectory(libraries/math)
 add_subdirectory(libraries/matrix)
 add_subdirectory(libraries/productArray)
 add_subdirectory(libraries/file)
+add_subdirectory(libraries/stack)
 
 # Projects
 add_subdirectory(Laboratory1) #Variant 5

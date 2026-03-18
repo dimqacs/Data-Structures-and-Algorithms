@@ -1,0 +1,27 @@
+#pragma once
+#include <stdbool.h>
+#include <stddef.h>
+
+typedef void (*display_t)(const void *element);
+
+typedef struct {
+    void *data;
+    unsigned int top;
+    size_t elementSize;
+} Stack;
+
+void initStack(Stack *stack, size_t elementSize);
+
+bool push(Stack *stack, const void *element);
+
+bool pop(Stack *stack, void *element);
+
+bool peek(const Stack *stack, void *element);
+
+bool freeStack(Stack *stack);
+
+void displayStack(const Stack *stack, display_t displayFunction, bool handleNextFlag);
+
+bool allocateStackMemory(Stack **stack, unsigned int count, size_t elementSize);
+
+void fillStackManually(int **array, unsigned int size);
