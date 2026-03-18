@@ -9,5 +9,5 @@ target_include_directories(stack
 
 target_link_libraries(stack
         PUBLIC
-
+        menu
 )

@@ -1,15 +1,18 @@
-#include "stack.h"
-
 #include <stdlib.h>
 #include <string.h>
 
+#include "stack.h"
 #include "menu.h"
-#include "read.h"
 
-void initStack(Stack *stack, const size_t elementSize) {
-    stack->data = NULL;
-    stack->top = 0;
-    stack->elementSize = elementSize;
+bool initStack(Stack **stack) {
+    if (*stack == NULL) {
+        *stack = calloc(1, sizeof(Stack));
+        if (!*stack) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 bool push(Stack *stack, const void *element) {
@@ -75,23 +78,23 @@ void displayStack(const Stack *stack, const display_t displayFunction, const boo
 }
 
 bool allocateStackMemory(Stack **stack, const unsigned int count, const size_t elementSize) {
-    if (*stack == NULL) {
-        initStack(*stack, elementSize);
-    }
-
-    if ((*stack)->top != 0) {
-        freeStack(*stack);
-    }
-
-    void *tmp = calloc(count, (*stack)->elementSize);
-
-    if (!tmp) {
-        handleNext("Memory allocation failed.");
+    if (!initStack(stack)) {
+        // handleNext("Stack allocation failed.");
         return false;
     }
 
+    void *tmp = calloc(count, elementSize);
+
+    if (!tmp) {
+        // handleNext("Memory allocation failed.");
+        return false;
+    }
+
+    free((*stack)->data);
+
     (*stack)->data = tmp;
-    (*stack)->top = 0;
+	(*stack)->top = 0;
+    (*stack)->elementSize = elementSize;
 
     return true;
 }

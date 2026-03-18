@@ -10,7 +10,7 @@ typedef struct {
     size_t elementSize;
 } Stack;
 
-void initStack(Stack *stack, size_t elementSize);
+bool initStack(Stack **stack);
 
 bool push(Stack *stack, const void *element);
 
