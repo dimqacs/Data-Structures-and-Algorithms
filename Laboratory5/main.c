@@ -7,13 +7,12 @@
 #include "read.h"
 #include "file.h"
 #include "productArray.h"
+#include "stack.h"
 
 int main(void) {
-    unsigned int option, arraySize = 0, productIndex = 0;
+    unsigned int option, stackSize = 0;
 
-    Product *array = NULL, product;
-
-    const char filePath[] = "./Laboratory4/products.csv";
+    Stack *stack = NULL;
 
     const char *options[] = {
         "-------------------------Stack-------------------------",
@@ -33,7 +32,7 @@ int main(void) {
         "-------------------------------------------------------"
     };
 
-    setMenuOptions(options, 16);
+    setMenuOptions(options, 15);
 
     printf("-------------------------Welcome-------------------------\n");
 
@@ -42,10 +41,21 @@ int main(void) {
 
         readUnsignedInt("Introduce an option: ", &option);
 
-        arraySize = 0;
-
         switch (option) {
             case 1:
+                readUnsignedInt("Enter the count of the Products that should be in Stack: ", &stackSize);
+
+                if (stackSize == 0) {
+                    handleNext("There can not be 0 Products in the Stack.");
+                    break;
+                }
+
+                if (!allocateStackMemory(&stack, stackSize, sizeof(Product))) {
+                    handleNext("Can not allocate Stack Memory.");
+                    break;
+                }
+
+
 
                 break;
             case 9:

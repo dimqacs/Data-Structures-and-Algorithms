@@ -8,4 +8,5 @@ target_link_libraries(lab5
         read
         productArray
         file
+        stack
 )

@@ -79,14 +79,12 @@ void displayStack(const Stack *stack, const display_t displayFunction, const boo
 
 bool allocateStackMemory(Stack **stack, const unsigned int count, const size_t elementSize) {
     if (!initStack(stack)) {
-        // handleNext("Stack allocation failed.");
         return false;
     }
 
     void *tmp = calloc(count, elementSize);
 
     if (!tmp) {
-        // handleNext("Memory allocation failed.");
         return false;
     }
 
