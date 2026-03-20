@@ -5,6 +5,7 @@
 #include "menu.h"
 #include "read.h"
 #include "sort.h"
+#include "array.h"
 #include "productArray.h"
 
 int main(void) {
@@ -42,7 +43,12 @@ int main(void) {
                     break;
                 }
 
-                fillProductArrayManually(&array, arraySize, true);
+                if (!allocateArrayMemory((void **) &array, arraySize, sizeof(Product))) {
+                    break;
+                }
+
+                fillProductArrayManually(array, arraySize, true);
+
                 break;
             case 3:
                 if (arraySize == 0) {

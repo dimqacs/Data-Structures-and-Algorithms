@@ -55,7 +55,11 @@ int main(void) {
                     break;
                 }
 
+				fillProductArrayManually(stack->data, stackSize, false);
 
+                clearTerminal();
+
+                displayProductArray(stack->data, stackSize, "Products from the Stack:\n", true);
 
                 break;
             case 9:

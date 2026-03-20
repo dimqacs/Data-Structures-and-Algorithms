@@ -7,5 +7,6 @@ target_link_libraries(lab2
         menu
         read
         sort
+        array
         productArray
 )

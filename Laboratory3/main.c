@@ -56,7 +56,11 @@ int main(void) {
                     break;
                 }
 
-                fillProductArrayManually(&array, arraySize, false);
+                if (!allocateArrayMemory((void **) &array, arraySize, sizeof(Product))) {
+                    break;
+                }
+
+                fillProductArrayManually(array, arraySize, false);
 
                 if (!writeArrayToFile(filePath, array, arraySize, sizeof(Product), "r+b")) {
                     handleNext("Can not open the file for write. Make sure the file exists.");

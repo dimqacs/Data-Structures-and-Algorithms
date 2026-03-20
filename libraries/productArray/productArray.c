@@ -56,17 +56,14 @@ bool displayProductArray(const Product *array, const unsigned int size, const ch
     return true;
 }
 
-void fillProductArrayManually(Product **array, const unsigned int size, const bool handleNextFlag) {
-    if (!allocateArrayMemory((void **) array, size, sizeof(Product))) {
-        return;
-    }
+void fillProductArrayManually(Product *array, const unsigned int size, const bool handleNextFlag) {
 
     for (unsigned int index = 0; index < size; index++) {
         printf("\nIntroduce information of product number %d:\n", index + 1);
-        *(*array + index) = readNewProduct();
+        *(array + index) = readNewProduct();
     }
 
-    displayProductArray(*array, size, "The Array with Products: \n", handleNextFlag ? true : false);
+    displayProductArray(array, size, "The Array with Products: \n", handleNextFlag ? true : false);
 }
 
 int compareProductsByPrice(const void *a, const void *b) {

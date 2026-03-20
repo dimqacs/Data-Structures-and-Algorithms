@@ -56,7 +56,11 @@ int main(void) {
                     break;
                 }
 
-                fillProductArrayManually(&array, arraySize, false);
+                if (!allocateArrayMemory((void **) &array, arraySize, sizeof(Product))) {
+                    break;
+                }
+
+                fillProductArrayManually(array, arraySize, false);
 
                 if (!writeArrayToCSV(filePath, array, arraySize, sizeof(Product), "w", productSerializer,
                                      productCSVHeader)) {
