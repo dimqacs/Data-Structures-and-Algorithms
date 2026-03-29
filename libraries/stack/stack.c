@@ -31,14 +31,12 @@ bool push(Stack *stack, const void *element) {
     return true;
 }
 
-bool pop(Stack *stack, void *element) {
+bool pop(Stack *stack) {
     if (stack->top == 0) {
         return false;
     }
 
     stack->top--;
-
-    memcpy(element, (char *) stack->data + stack->top * stack->elementSize, stack->elementSize);
 
     return true;
 }
@@ -54,7 +52,7 @@ bool peek(const Stack *stack, void *element) {
 }
 
 bool freeStack(Stack *stack) {
-    if (stack->top == 0 && stack->data == NULL) {
+    if (!stack || !stack->data) {
         return false;
     }
 
@@ -66,8 +64,8 @@ bool freeStack(Stack *stack) {
     return true;
 }
 
-void displayStack(const Stack *stack, const display_t displayFunction, const bool handleNextFlag) {
-    for (unsigned int index = 0; index < stack->top; index++) {
+void displayStack(const Stack *stack, display_t displayFunction, const bool handleNextFlag) {
+    for (int index = (int)stack->top - 1; index >= 0; index--) {
         const void *element = (const char *) stack->data + index * stack->elementSize;
         displayFunction(element);
     }

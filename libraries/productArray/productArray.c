@@ -28,7 +28,8 @@ Product readNewProduct() {
     return product;
 }
 
-void displayProduct(const Product *product) {
+void displayProduct(const void *element) {
+    const Product *product = element;
     printf("  Name       : %s\n", product->name);
     printf("  Country    : %s\n", product->country);
     printf("  Manufacturer: %s\n", product->manufacturer);
@@ -111,3 +112,4 @@ void productDeserializer(const char *line, void *element) {
 void productCSVHeader(FILE *file) {
     fprintf(file, "name,country,manufacturer,articleId,price\n");
 }
+

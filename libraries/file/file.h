@@ -1,5 +1,6 @@
 #pragma once
 #include <stdbool.h>
+#include "stack.h"
 
 typedef void (*serializer_t)(FILE*, const void*);
 typedef void (*deserializer_t)(const char*, void*);
@@ -18,3 +19,7 @@ bool fileExists(const char *filename);
 bool writeArrayToCSV(const char *filename, const void *array, unsigned int size, size_t elementSize, const char *mode, serializer_t serializer, header_t writeHeader);
 
 void *readArrayFromCSV(const char *filename, unsigned int *size, size_t elementSize, deserializer_t deserializer);
+
+bool exportStackToFile(const char *filename, const Stack *stack, const char *mode);
+
+bool exportStackToCSVFile(const char *filename, const Stack *stack, const char *mode, serializer_t serializer, header_t writeHeader);

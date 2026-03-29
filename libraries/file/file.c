@@ -132,3 +132,38 @@ void *readArrayFromCSV(const char *filename, unsigned int *size, const size_t el
 
     return array;
 }
+
+bool exportStackToFile(const char *filename, const Stack *stack,  const char *mode) {
+    FILE *file = fopen(filename, mode);
+
+    if (file == NULL) {
+        return false;
+    }
+
+    fseek(file, 0, SEEK_END);
+    fwrite(stack->data, stack->elementSize, stack->top, file);
+
+    fclose(file);
+
+    return true;
+}
+
+bool exportStackToCSVFile(const char *filename, const Stack *stack, const char *mode, const serializer_t serializer, const header_t writeHeader) {
+    FILE *file = fopen(filename, mode);
+
+    if (!file) {
+        return false;
+    }
+
+    if (writeHeader) {
+        writeHeader(file);
+    }
+
+    for (int index = (int)stack->top - 1; index >= 0; index--) {
+        serializer(file, (char*)stack->data + index * stack->elementSize);
+    }
+
+    fclose(file);
+
+    return true;
+}

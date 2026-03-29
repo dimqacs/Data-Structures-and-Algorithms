@@ -11,7 +11,7 @@ typedef struct {
 
 Product readNewProduct();
 
-void displayProduct(const Product *product);
+void displayProduct(const void *element);
 
 bool displayProductArray(const Product *array, unsigned int size, const char *text, bool handleNextFlag);
 

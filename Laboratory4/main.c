@@ -62,8 +62,7 @@ int main(void) {
 
                 fillProductArrayManually(array, arraySize, false);
 
-                if (!writeArrayToCSV(filePath, array, arraySize, sizeof(Product), "w", productSerializer,
-                                     productCSVHeader)) {
+                if (!writeArrayToCSV(filePath, array, arraySize, sizeof(Product), "w", productSerializer, productCSVHeader)) {
                     handleNext("Can not open the file for write. Make sure the file exists.");
                     break;
                 }
@@ -119,7 +118,7 @@ int main(void) {
                 }
 
                 if (productIndex > arraySize || productIndex == 0) {
-                    handleNext("The is no Product with such index. Try introducing a correct index.");
+                    handleNext("There is no Product with such index. Try introducing a correct index.");
 
                     free(array);
                     array = NULL;

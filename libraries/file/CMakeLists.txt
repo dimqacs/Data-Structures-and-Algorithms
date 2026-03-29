@@ -10,4 +10,5 @@ target_include_directories(file
 target_link_libraries(file
         PUBLIC
         array
+        stack
 )
