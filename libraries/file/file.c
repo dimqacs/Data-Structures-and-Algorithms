@@ -167,3 +167,38 @@ bool exportStackToCSVFile(const char *filename, const Stack *stack, const char *
 
     return true;
 }
+
+bool exportQueueToFile(const char *filename, const Queue *queue,  const char *mode) {
+    FILE *file = fopen(filename, mode);
+
+    if (file == NULL) {
+        return false;
+    }
+
+    fseek(file, 0, SEEK_END);
+    fwrite(queue->data, queue->elementSize, queue->size, file);
+
+    fclose(file);
+
+    return true;
+}
+
+bool exportQueueToCSVFile(const char *filename, const Queue *queue, const char *mode, const serializer_t serializer, const header_t writeHeader) {
+    FILE *file = fopen(filename, mode);
+
+    if (!file) {
+        return false;
+    }
+
+    if (writeHeader) {
+        writeHeader(file);
+    }
+
+    for (unsigned int index = queue->front; index <= queue->rear; index++) {
+        serializer(file, (char*)queue->data + index * queue->elementSize);
+    }
+
+    fclose(file);
+
+    return true;
+}

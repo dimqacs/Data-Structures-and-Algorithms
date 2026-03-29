@@ -9,4 +9,5 @@ target_link_libraries(lab5
         productArray
         file
         stack
+        queue
 )

@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-typedef void (*display_t)(const void *element);
+typedef void (display_t)(const void *element);
 
 typedef struct {
     void *data;
@@ -15,8 +15,6 @@ typedef struct {
 bool initQueue(Queue **queue);
 
 bool enqueue(Queue *queue, const void *element);
-
-bool dequeue(Queue *queue, void *element);
 
 bool freeQueue(Queue *queue);
 

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
 
 #include "menu.h"
@@ -7,11 +6,13 @@
 #include "file.h"
 #include "productArray.h"
 #include "stack.h"
+#include "queue.h"
 
 int main(void) {
     unsigned int option, stackSize = 0;
 
     Stack *stack = NULL;
+    Queue *queue = NULL;
     Product* products;
 
     const char *options[] = {
@@ -158,8 +159,56 @@ int main(void) {
                 );
 
                 break;
+            case 8:
+                if (!stack || stack->top <= 0) {
+                    handleNext("There is nothing to copy. Trying creating the Stack first.");
+                    break;
+                }
+
+                if (!allocateQueueMemory(&queue, stack->top, sizeof(Product))) {
+                    handleNext("Can not allocate Queue Memory.");
+                    break;
+                }
+
+                products = stack->data;
+                for (unsigned int index = 0; index < stack->top; index++) {
+                    enqueue(queue, &products[index]);
+                }
+
+                printf("All elements successfully copied from Stack to Queue.\n\nQueue elements:\n");
+
+                displayQueue(queue, displayProduct, true);
+
+                break;
+            case 9:
+                if (!queue || queue->size <= 0) {
+                    handleNext("Queue is empty or doesn't exist. Trying creating the Queue first.");
+                    break;
+                }
+
+                if (!exportQueueToFile("./Laboratory5/queue.bin", queue, "wb")) {
+                    handleNext("Some error occurred. Couldn't write Queue to .bin file.");
+                    break;
+                }
+
+                if (!exportQueueToCSVFile("./Laboratory5/queue.csv", queue, "w", productSerializer, productCSVHeader)) {
+                    handleNext("Some error occurred. Couldn't write Queue to .csv file.");
+                    break;
+                }
+
+                handleNext("Queue data successfully exported to queue.bin and queue.csv files.");
+                break;
+            case 10:
+                handleNext(
+                    freeQueue(queue)
+                        ? "Queue memory cleared successfully"
+                        : "There is nothing to clear, queue is not initialized."
+                );
+
+                break;
             case 11:
                 freeStack(stack);
+                freeQueue(queue);
                 printf("All memory cleared successfully. \n");
                 displayByeMessageAndExit();
             default:

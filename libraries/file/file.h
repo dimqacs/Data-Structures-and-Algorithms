@@ -1,6 +1,7 @@
 #pragma once
 #include <stdbool.h>
 #include "stack.h"
+#include "queue.h"
 
 typedef void (*serializer_t)(FILE*, const void*);
 typedef void (*deserializer_t)(const char*, void*);
@@ -23,3 +24,7 @@ void *readArrayFromCSV(const char *filename, unsigned int *size, size_t elementS
 bool exportStackToFile(const char *filename, const Stack *stack, const char *mode);
 
 bool exportStackToCSVFile(const char *filename, const Stack *stack, const char *mode, serializer_t serializer, header_t writeHeader);
+
+bool exportQueueToFile(const char *filename, const Queue *queue, const char *mode);
+
+bool exportQueueToCSVFile(const char *filename, const Queue *queue, const char *mode, serializer_t serializer, header_t writeHeader);
