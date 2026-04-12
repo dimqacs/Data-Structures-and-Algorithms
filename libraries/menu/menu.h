@@ -1,5 +1,7 @@
 #pragma once
 
+typedef void (display_t)(const void *element);
+
 void clearTerminal();
 
 void clearBuffer();

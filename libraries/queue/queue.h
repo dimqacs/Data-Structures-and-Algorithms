@@ -1,8 +1,6 @@
 #pragma once
-#include <stddef.h>
 #include <stdbool.h>
-
-typedef void (display_t)(const void *element);
+#include "menu.h"
 
 typedef struct {
     void *data;

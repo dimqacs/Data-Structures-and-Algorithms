@@ -269,6 +269,8 @@ int main(void) {
 
                 break;
             case 9:
+                free(array);
+                printf("Memory cleaned successfully. \n");
                 displayByeMessageAndExit();
             default:
                 handleNext("Option not defined.");

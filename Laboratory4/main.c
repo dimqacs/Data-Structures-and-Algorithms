@@ -62,7 +62,8 @@ int main(void) {
 
                 fillProductArrayManually(array, arraySize, false);
 
-                if (!writeArrayToCSV(filePath, array, arraySize, sizeof(Product), "w", productSerializer, productCSVHeader)) {
+                if (!writeArrayToCSV(filePath, array, arraySize, sizeof(Product), "w", productSerializer,
+                                     productCSVHeader)) {
                     handleNext("Can not open the file for write. Make sure the file exists.");
                     break;
                 }
@@ -272,6 +273,8 @@ int main(void) {
 
                 break;
             case 9:
+                free(array);
+                printf("Memory cleaned successfully. \n");
                 displayByeMessageAndExit();
             default:
                 handleNext("Option not defined.");

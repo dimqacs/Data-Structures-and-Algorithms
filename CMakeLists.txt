@@ -15,6 +15,7 @@ add_subdirectory(libraries/productArray)
 add_subdirectory(libraries/file)
 add_subdirectory(libraries/stack)
 add_subdirectory(libraries/queue)
+add_subdirectory(libraries/list)
 
 # Projects
 add_subdirectory(Laboratory1) #Variant 5
