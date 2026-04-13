@@ -30,12 +30,12 @@ int getRandomNumber(const int min, const int max) {
 }
 
 int compareInt(const void *a, const void *b) {
-    return *(const int*)a - *(const int*)b;
+    return *(const int *) a - *(const int *) b;
 }
 
 int compareFloat(const void *a, const void *b) {
-    const float floatA = *(const float*)a;
-    const float floatB = *(const float*)b;
+    const float floatA = *(const float *) a;
+    const float floatB = *(const float *) b;
 
     return floatA > floatB ? 1 : floatA < floatB ? -1 : 0;
 }

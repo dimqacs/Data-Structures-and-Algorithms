@@ -1,6 +1,6 @@
 #pragma once
 
-typedef int (*compare_t)(const void*, const void*);
+typedef int (*compare_t)(const void *, const void *);
 
 int *heapSortAscending(const int *array, unsigned int size);
 

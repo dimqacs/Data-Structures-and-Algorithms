@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "matrix.h"
 #include "read.h"
 #include "menu.h"
 #include "math.h"
+#include "matrix.h"
 
 void displayMatrix(int *const *matrix, const unsigned int size, const char *text, const bool handleNextFlag) {
     if (size == 0) {
@@ -83,7 +83,7 @@ void fillMatrixRandomly(int ***matrix, const unsigned int newSize, const unsigne
 
     for (unsigned int i = 0; i < newSize; i++) {
         for (unsigned int j = 0; j < newSize; j++) {
-            *(*(*matrix + i) + j) = getRandomNumber(-(int)newSize, (int)newSize);
+            *(*(*matrix + i) + j) = getRandomNumber(-(int) newSize, (int) newSize);
         }
     }
 

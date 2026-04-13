@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "sort.h"
 #include "array.h"
@@ -281,7 +281,8 @@ int *mergeSortAscending(const int *array, const unsigned int size) {
     return sortedArray;
 }
 
-void *bubbleSortDescending(const void *array, const unsigned int size, const size_t elementSize, const compare_t compare) {
+void *bubbleSortDescending(const void *array, const unsigned int size, const size_t elementSize,
+                           const compare_t compare) {
     void *sortedArray = NULL;
     allocateArrayMemory(&sortedArray, size, elementSize);
     equalArrays(array, sortedArray, size, elementSize);
@@ -346,7 +347,8 @@ void quickSort(void *array, const int low, const int high, const size_t elementS
     }
 }
 
-void *quickSortAscending(const void *array, const unsigned int size, const size_t elementSize, const compare_t compare) {
+void *quickSortAscending(const void *array, const unsigned int size, const size_t elementSize,
+                         const compare_t compare) {
     void *sortedArray = NULL;
     allocateArrayMemory(&sortedArray, size, elementSize);
     equalArrays(array, sortedArray, size, elementSize);

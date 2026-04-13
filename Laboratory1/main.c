@@ -3,10 +3,10 @@
 #include <stdbool.h>
 
 #include "menu.h"
-#include "array.h"
 #include "read.h"
 #include "sort.h"
 #include "math.h"
+#include "array.h"
 #include "matrix.h"
 
 const int K = 10;
@@ -169,7 +169,7 @@ int main(void) {
 
                 if (multiplication > K) {
                     int *mainDiagonal = NULL;
-                    allocateArrayMemory((void**)&mainDiagonal, matrixSize, sizeof(int));
+                    allocateArrayMemory((void **) &mainDiagonal, matrixSize, sizeof(int));
 
                     for (unsigned int row = 0; row < matrixSize; row++) {
                         *(mainDiagonal + row) = *(*(matrix + row) + row);
@@ -188,7 +188,7 @@ int main(void) {
                     free(mainDiagonal);
                 } else {
                     int *secondaryDiagonal = NULL;
-                    allocateArrayMemory((void**)&secondaryDiagonal, matrixSize, sizeof(int));
+                    allocateArrayMemory((void **) &secondaryDiagonal, matrixSize, sizeof(int));
 
                     for (unsigned int row = 0; row < matrixSize; row++) {
                         *(secondaryDiagonal + row) = *(*(matrix + row) + matrixSize - row - 1);
@@ -238,7 +238,7 @@ int main(void) {
                     }
                 }
                 int *sortedLine = NULL;
-                allocateArrayMemory((void**)&sortedLine, matrixSize, sizeof(int));
+                allocateArrayMemory((void **) &sortedLine, matrixSize, sizeof(int));
 
                 if (condition) {
                     for (unsigned int column = 0; column < matrixSize; column++) {

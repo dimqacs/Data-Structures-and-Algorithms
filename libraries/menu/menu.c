@@ -48,7 +48,6 @@ void displayMenu() {
             visibleIndex++;
         }
     }
-
 }
 
 void displayByeMessageAndExit() {

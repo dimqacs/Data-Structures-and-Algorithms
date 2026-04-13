@@ -40,7 +40,7 @@ bool allocateArrayMemory(void **array, const unsigned int count, const size_t el
 }
 
 void fillArrayManually(int **array, const unsigned int size) {
-    if (!allocateArrayMemory((void**)array, size, sizeof(int))) {
+    if (!allocateArrayMemory((void **) array, size, sizeof(int))) {
         return;
     }
 
@@ -55,7 +55,7 @@ void fillArrayManually(int **array, const unsigned int size) {
 }
 
 void fillArrayRandomly(int **array, const int size) {
-    if (!allocateArrayMemory((void**)array, size, sizeof(int))) {
+    if (!allocateArrayMemory((void **) array, size, sizeof(int))) {
         return;
     }
 
@@ -92,7 +92,8 @@ bool evenSmallerThenOdd(const int *array, const unsigned int size) {
     return even < odd / oddCount ? true : false;
 }
 
-void *removeElement(const void *array, const unsigned int count, const unsigned int elementIndex, const size_t elementSize) {
+void *removeElement(const void *array, const unsigned int count, const unsigned int elementIndex,
+                    const size_t elementSize) {
     void *resultArray = NULL;
     if (!allocateArrayMemory(&resultArray, count, elementSize)) {
         return NULL;
@@ -104,7 +105,7 @@ void *removeElement(const void *array, const unsigned int count, const unsigned 
             continue;
         }
 
-        memcpy(resultArray + destIndex * elementSize,array + srcIndex * elementSize, elementSize);
+        memcpy(resultArray + destIndex * elementSize, array + srcIndex * elementSize, elementSize);
 
         destIndex++;
     }
